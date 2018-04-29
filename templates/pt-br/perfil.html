@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!--Título sugerido-->
+    <title>Pão e Cia</title>
+
+    <!--Jquery-->
+    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+
+    <!--Materialize-->
+    <script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
+
+    <!--Ícones-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='icons/google/material/iconfont/material-icons.css') }}">
+
+    <!--Otimizado para mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--Meu CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/image.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mesa.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/niveis.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/paraimg.css') }}">
+
+    <!--Init-->
+    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/niver.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/select.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/autoc.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/paraimg.js') }}"></script>
+  </head>
+  <body>
+
+    <header>
+      <nav>
+        <div class="nav-wrapper red darken-4">
+          <a href="{{ url_for('index') }}" class="brand-logo">Pão&#38;Cia</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="{{ url_for('profile') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="{{ url_for('profile') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <div class="niveis flow-text center-align">
+      <!--
+      Confiança -> Quando o comprador é confiável, paga tudo certinho. A maioria das pessoas estará em 100%
+      Fidelidade -> A pessoa é fiel ao estabelecimento, e vai lá quase toda sexta, sábado, e domingo, por exemplo.
+      Socialização -> Quanto mais amigos a pessoa tiver na mesa, maior será seu nível de Socialização
+      Inovação -> Quanto mais o sujeito variar o cardápio, maior será a invação
+      -->
+      <h4>
+        Rafael Yuri Silva
+      </h4>
+
+      <h5>
+        Níveis
+      </h5>
+      <div class="confianca">
+        <p>Confiança</p>
+        <div class="container_nivel">
+          <div class="niveis_classe conf">90%</div>
+        </div>
+      </div>
+
+      <div class="fidelidade">
+        <p>Fidelidade</p>
+        <div class="container_nivel">
+          <div class="niveis_classe fidel">63%</div>
+        </div>
+      </div>
+
+      <div class="social">
+        <p>Socialização</p>
+        <div class="container_nivel">
+          <div class="niveis_classe sociali">78%</div>
+        </div>
+      </div>
+
+      <div class="inovacao">
+        <p>Inovação</p>
+        <div class="container_nivel">
+          <div class="niveis_classe inov">20%</div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <br>
+    <div class="compras_recentes_semana">
+      <div class="title_recents flow-text center-align">
+        <h5>
+          Mais comprados (semana)
+        </h5>
+      </div>
+      <div class="tabela_compras">
+        <table class="bordered centered">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Quantidade</th>
+              <th>Total gasto</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Pão Francês</td>
+              <td>3 Kg</td>
+              <td>R$36,00</td>
+            </tr>
+            <tr>
+              <td>Pão doce</td>
+              <td>1 Kg</td>
+              <td>R$10,00</td>
+            </tr>
+            <tr>
+              <td>Pão de queijo</td>
+              <td>0,5 Kg</td>
+              <td>R$6,00</td>
+            </tr>
+            <tr>
+              <td>Coca-cola 1L</td>
+              <td>2 L</td>
+              <td>R$1,00 *</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td></td>
+              <td>R$53,00</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+
+    <br>
+    <div class="compras_recentes_mes">
+      <div class="title_recents flow-text center-align">
+        <h5>
+          Mais comprados (mês)
+        </h5>
+      </div>
+      <div class="tabela_compras">
+        <table class="bordered centered">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Quantidade</th>
+              <th>Total gasto</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Pão Francês</td>
+              <td>3 Kg</td>
+              <td>R$36,00</td>
+            </tr>
+            <tr>
+              <td>Pão doce</td>
+              <td>1 Kg</td>
+              <td>R$10,00</td>
+            </tr>
+            <tr>
+              <td>Pão de queijo</td>
+              <td>0,5 Kg</td>
+              <td>R$6,00</td>
+            </tr>
+            <tr>
+              <td>Coca-cola 1L</td>
+              <td>2 L</td>
+              <td>R$1,00 *</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td></td>
+              <td>R$53,00</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <br>
+    <div class="compras_recentes_geral">
+      <div class="title_recents flow-text center-align">
+        <h5>
+          Mais comprados (geral)
+        </h5>
+      </div>
+      <div class="tabela_compras">
+        <table class="bordered centered">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Quantidade</th>
+              <th>Total gasto</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Pão Francês</td>
+              <td>3 Kg</td>
+              <td>R$36,00</td>
+            </tr>
+            <tr>
+              <td>Pão doce</td>
+              <td>1 Kg</td>
+              <td>R$10,00</td>
+            </tr>
+            <tr>
+              <td>Pão de queijo</td>
+              <td>0,5 Kg</td>
+              <td>R$6,00</td>
+            </tr>
+            <tr>
+              <td>Coca-cola 1L</td>
+              <td>2 L</td>
+              <td>R$1,00 *
+
+              </td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td></td>
+              <td>R$53,00</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+    <div class="dividiu_asterisco">
+      <p class="flow-text center-align">
+        * Compras divididas com outras pessoas
+      </p>
+      <br>
+    </div>
+
+    <div class="amigos">
+      <br>
+      <div class="comuns">
+        <div class="title_recents flow-text center-align">
+          <h5>
+            Amigos mais comuns
+          </h5>
+        </div>
+        <div class="tabela_compras">
+          <table class="bordered centered">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Duração</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>Amanda Dias Costa</td>
+                <td>3</td>
+                <td>4h</td>
+              </tr>
+              <tr>
+                <td>José Leonardo Simba</td>
+                <td>1</td>
+                <td>1h</td>
+              </tr>
+              <tr>
+                <td>Jorge Yuri Machado</td>
+                <td>1</td>
+                <td>30 min</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="history_p">
+      <br>
+      <p class="flow-text center-align">
+        Ver: <a href="#">histórico de compras</a>
+      </p>
+    </div>
+    <div class="seus_dados">
+      <p class="flow-text center-align">
+        Ver: <a href="dados.html">seus dados</a>
+      </p>
+    </div>
+
+
+
+  </body>
+</html>

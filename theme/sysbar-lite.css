@@ -1,0 +1,31 @@
+*{
+    color:#504D4F;
+}
+GtkWindow {
+    background-color: #F5F3F4;
+}
+.entry{
+    border: 1px solid #B6AFB4;
+    border-radius: 2px;
+    color: #504D4F;
+    border-radius: 4px;
+}
+.button {
+    color: #141414;
+    background: #F0EDEF;
+    border: 1px solid #C8C0C5;
+    border-radius:4px;
+    /*box-shadow: 1px 0px 0px rgba(0, 0, 0, 0.16), 1px 1px 0px rgba(0, 0, 0, 0.23);*/
+}
+.button:hover{
+    border:1px solid #B6AFB4;
+}
+.button:hover:active,
+.button:active{
+    border:1px solid #A49EA2;
+}
+.progressbar{
+    background:#708090;
+    border-color:#708090;
+    color:#fff;
+}

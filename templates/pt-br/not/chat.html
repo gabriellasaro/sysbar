@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!--Título sugerido-->
+    <title>Pão e Cia</title>
+
+    <!--Jquery-->
+    <script src="js/{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+
+    <!--Materialize-->
+    <script src="js/{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+    <link type="text/css" rel="stylesheet" href="css/{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
+
+    <!--Ícones-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='icons/google/material/iconfont/material-icons.css') }}">
+
+    <!--Otimizado para mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--Meu CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/image.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mesa.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/niveis.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/paraimg.css') }}">
+
+    <!--Init-->
+    <script src="js/{{ url_for('static', filename='js/nav.js') }}"></script>
+    <script src="js/{{ url_for('static', filename='js/niver.js') }}"></script>
+    <script src="js/{{ url_for('static', filename='js/select.js') }}"></script>
+    <script src="js/{{ url_for('static', filename='js/autoc.js') }}"></script>
+    <script src="js/{{ url_for('static', filename='js/chart.min.js') }}"></script>
+
+
+
+
+  </head>
+  <body>
+
+    <header>
+      <nav>
+        <div class="nav-wrapper red darken-4">
+          <a href="{{ url_for('index') }}" class="brand-logo">Pão&#38;Cia</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="{{ url_for('perfil') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('chat') }}"><i class="material-icons left">question_answer</i>Chat</a></li>
+            <li><a href="{{ url_for('entrar') }}"><i class="material-icons left">build</i>Login|Cadastrar-se</a></li>
+            <li><a href="{{ url_for('sobre') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="{{ url_for('perfil') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('chat') }}"><i class="material-icons">question_answer</i>Chat</a></li>
+            <li><a href="{{ url_for('entrar') }}"><i class="material-icons left">build</i>Login|Cadastrar-se</a></li>
+            <li><a href="{{ url_for('sobre') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+
+    <div class="chat_sys">
+      <div class="container_ct">
+        <img src="img/rostos/2.jpg" alt="Avatar">
+        <p>Olá! Essa porção dá pra 4 pessoas?</p>
+        <span class="time-right">11:00</span>
+      </div>
+
+      <div class="container_ct darker">
+        <img src="img/rostos/3.jpg" alt="Avatar" class="right">
+        <p>Sim, mas o ideal é 3 pessoas.</p>
+        <span class="time-left">11:01</span>
+      </div>
+
+      <div class="container_ct">
+        <img src="img/rostos/2.jpg" alt="Avatar">
+        <p>Entendido!</p>
+        <span class="time-right">11:02</span>
+      </div>
+
+      <div class="container_ct darker">
+        <img src="img/rostos/3.jpg" alt="Avatar" class="right">
+        <p>Qualquer dúvida estou a sua disposição!</p>
+        <span class="time-left">11:05</span>
+      </div>
+
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">mode_edit</i>
+              <textarea id="icon_prefix2" class="materialize-textarea" data-length="80"></textarea>
+              <label for="icon_prefix2">Mensagem</label>
+            </div>
+            <div class="enviar_chat">
+              <div class="row">
+                <a class="waves-effect waves-light btn col s6 offset-s3 red lighten-1">Enviar</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>

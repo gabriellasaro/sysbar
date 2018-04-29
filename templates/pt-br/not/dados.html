@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!--Título sugerido-->
+    <title>Pão e Cia</title>
+
+    <!--Jquery-->
+    <script src="js/{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+
+    <!--Materialize-->
+    <script src="js/{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+    <link type="text/css" rel="stylesheet" href="css/{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
+
+    <!--Ícones-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='icons/google/material/iconfont/material-icons.css') }}">
+
+    <!--Otimizado para mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--Meu CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/image.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mesa.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/niveis.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/paraimg.css') }}">
+
+    <!--Init-->
+    <script src="js/{{ url_for('static', filename='js/nav.js') }}"></script>
+    <script src="js/{{ url_for('static', filename='js/niver.js') }}"></script>
+    <script src="js/{{ url_for('static', filename='js/select.js') }}"></script>
+    <script src="js/{{ url_for('static', filename='js/autoc.js') }}"></script>
+    <script src="js/{{ url_for('static', filename='js/chart.min.js') }}"></script>
+
+
+  </head>
+  <body>
+
+    <header>
+      <nav>
+        <div class="nav-wrapper red darken-4">
+          <a href="{{ url_for('index') }}" class="brand-logo">Pão&#38;Cia</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="{{ url_for('perfil') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('chat') }}"><i class="material-icons left">question_answer</i>Chat</a></li>
+            <li><a href="{{ url_for('entrar') }}"><i class="material-icons left">build</i>Login|Cadastrar-se</a></li>
+            <li><a href="{{ url_for('sobre') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="{{ url_for('perfil') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('chat') }}"><i class="material-icons">question_answer</i>Chat</a></li>
+            <li><a href="{{ url_for('entrar') }}"><i class="material-icons left">build</i>Login|Cadastrar-se</a></li>
+            <li><a href="{{ url_for('sobre') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <div class="inform">
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <i class="material-icons prefix">account_circle</i>
+              <input disabled value="Rafael" id="first_name" type="text" class="validate">
+              <label for="first_name">Nome</label>
+            </div>
+            <div class="input-field col s6">
+              <input disabled value="Yuri Silva" id="last_name" type="text" class="validate">
+              <label for="first_name">Sobrenome</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">lock</i>
+              <input disabled value="****" id="password" type="password" class="validate">
+              <label for="password">PIN</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m12">
+              <i class="material-icons prefix">phone</i>
+              <input disabled value="27999999998" id="icon_telephone" type="tel" class="validate">
+              <label for="icon_telephone">Telefone</label>
+            </div>
+            <div class="wha s12">
+              <input type="checkbox" class="filled-in" id="filled-in-box" disabled checked="checked" />
+              <label for="filled-in-box">WhatsApp</label>
+            </div>
+            <br>
+            <div class="input-field col s12 m12">
+              <i class="material-icons prefix">email</i>
+              <input disabled value="rafayurisilva077@gmail.com.ba" id="email" type="email" class="validate">
+              <label for="email" data-error="Parece que isso não é um email">Email</label>
+            </div>
+          </div>
+          <div class="row col s12 m12">
+            <i class="material-icons prefix">cake</i>
+            <!-- Para deixar um campo inválido escrever "disabled" dentro do input (ver nome e sobrenome)-->
+            <input type="text" class="datepicker" disabled value="9 January, 2018">
+          </div>
+
+          <div class="row">
+            <div class="input-field col s6">
+              <i class="material-icons prefix">public</i>
+              <input disabled value="Brasil" id="pais" type="text" class="validate">
+              <label for="pais">País</label>
+            </div>
+            <div class="input-field col s6">
+              <input disabled value="ES" id="estado" type="text" class="validate">
+              <label for "estado">Estado</label>
+            </div>
+            <div class="input-field col s12 m6">
+              <i class="material-icons prefix">location_city</i>
+              <input disabled value="Marilândia" id="cidade" type="text" class="autocity">
+              <label for="cidade">Cidade</label>
+            </div>
+            <div class="input-field col s12 m6">
+              <i class="material-icons prefix">domain</i>
+              <input disabled value="29725000" id="cep" type="text" class="validate">
+              <label for="cep">CEP</label>
+            </div>
+            <div class="input-field col s12 l6">
+              <i class="material-icons prefix">place</i>
+              <input value="Rua Espírito Santo nº 5454" id="end1" type="text" class="">
+              <label for="end1">Endereço 1</label>
+            </div>
+            <div class="input-field col s12 l6">
+              <i class="material-icons prefix">place</i>
+              <input value="Rua Oitava Avenida 14" id="end2" type="text" class="">
+              <label for="end2">Endereço 2</label>
+            </div>
+            <div class="input-field col s12 l6">
+              <i class="material-icons prefix">place</i>
+              <input value="Central Park 4ª Avenida" id="end3" type="text" class="">
+              <label for="end3">Endereço 3</label>
+            </div>
+            <div class="input-field col s12 l6">
+              <i class="material-icons prefix">place</i>
+              <input value="" id="end4" type="text" class="validate">
+              <label for="end4">Endereço 4</label>
+            </div>
+
+          </div>
+
+
+
+
+
+
+          <div class="row">
+            <a class="waves-effect waves-light btn col s6 offset-s3 red lighten-1">Confirmar</a>
+          </div>
+
+
+
+        </form>
+      </div>
+
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!--Título sugerido-->
+    <title>Pão e Cia</title>
+
+    <!--Jquery-->
+    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+
+    <!--Materialize-->
+    <script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
+
+    <!--Ícones-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='icons/google/material/iconfont/material-icons.css') }}">
+
+    <!--Otimizado para mobile-->
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+    <!--Meu CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/image.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mesa.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/niveis.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/paraimg.css') }}">
+
+    <!--Init-->
+    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/niver.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/select.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/autoc.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+
+
+  </head>
+  <body>
+    <div class="fixed-action-btn click-to-toggle">
+      <a class="btn-floating btn-large waves-effect waves-light red pulsee">
+        <!-- pulsee é pulse -->
+        <i class="large material-icons">shopping_cart</i>
+      </a>
+    <ul>
+      <li><a href="{{ url_for('carrinho') }}" class="btn-floating waves-effect waves-light red"><i class="material-icons">remove_shopping_cart</i></a></li>
+    </ul>
+  </div>
+    <header>
+      <nav>
+        <div class="nav-wrapper red darken-4">
+          <a href="{{ url_for('index') }}" class="brand-logo">Cardápio</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="{{ url_for('profile') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="{{ url_for('profile') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- <nav>
+      <div class="nav-wrapper red darken-1">
+        <form>
+          <div class="input-field">
+            <input id="search" type="search" required class="autocomplete">
+            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form>
+      </div>
+    </nav> -->
+
+
+    <ul class="collapsible" data-collapsible="accordion">
+      <li>
+        <div class="collapsible-header"><i class="material-icons">filter_drama</i>Pães</div>
+        <div class="collapsible-body">
+          <ul class="collapsible" data-collapsible="expandable">
+            <li>
+              <div class="collapsible-header"><i class="material-icons">filter_drama</i>Pão francês</div>
+              <div class="collapsible-body center-align"><span>R$12,00/Kg</span><br>
+                <span>Pão francês ideal para cafés da manhã e tarde.</span><br>
+                <span><img class="circle" src="img/produtos/paofrances.jpg"></span><br>
+                <span>
+                  <a class="waves-effect waves-light btn red lighten-1"><i class="material-icons">person</i>PEDIR (Para mim)</a><br><br>
+                  <a class="waves-effect waves-light btn red lighten-1"><i class="material-icons">group</i>PEDIR (Para todos)</a><br><br>
+                </span></div>
+            </li>
+
+            <li>
+              <div class="collapsible-header"><i class="material-icons">filter_drama</i>Pão doce</div>
+              <div class="collapsible-body center-align"><span>R$10,00/Kg</span><br>
+                <span>Pão doce ideal para cafés da manhã e tarde.</span><br>
+                <span><img class="circle" src="img/produtos/paodoce.jpg"></span><br>
+                <span>
+                  <a class="waves-effect waves-light btn red lighten-1"><i class="material-icons">person</i>Para mim</a><br><br>
+                  <a class="waves-effect waves-light btn red lighten-1"><i class="material-icons">group</i>Para todos</a><br><br>
+                </span></div>
+            </li>
+
+          </ul>
+        </div>
+      </li>
+    </ul>
+
+
+  </body>
+</html>

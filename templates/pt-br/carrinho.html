@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!--Título sugerido-->
+    <title>Carrinho - SysBar</title>
+
+    <!--Jquery-->
+    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+
+    <!--Materialize-->
+    <script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
+
+    <!--Ícones-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='icons/google/material/iconfont/material-icons.css') }}">
+
+    <!--Otimizado para mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--Meu CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/image.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mesa.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/niveis.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/paraimg.css') }}">
+
+    <!--Init-->
+    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/niver.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/select.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/autoc.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-wrapper red darken-4">
+          <a href="{{ url_for('index') }}" class="brand-logo">Pão&#38;Cia</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="{{ url_for('profile') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="{{ url_for('profile') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <div class="compras_recentes_geral">
+      <div class="title_recents flow-text center-align">
+        <h5>
+          Carrinho
+        </h5>
+      </div>
+      <div class="tabela_compras">
+        <table class="bordered centered">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Quantidade</th>
+              <th>Total gasto</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>Pão Francês</td>
+              <td>3 Kg</td>
+              <td>R$36,00</td>
+              <td><span class="new badge black" data-badge-caption="">Cancelado</span></td>
+            </tr>
+            <tr>
+              <td>Pão doce</td>
+              <td>1 Kg</td>
+              <td>R$10,00</td>
+              <td><span class="new badge red" data-badge-caption="">Pendente</span></td>
+            </tr>
+            <tr>
+              <td>Pão de queijo</td>
+              <td>0,5 Kg</td>
+              <td>R$6,00</td>
+              <td><span class="new badge yellow darken-3" data-badge-caption="">Preparando</span></td>
+            </tr>
+            <tr>
+              <td>Coca-cola 1L</td>
+              <td>2 L</td>
+              <td>R$1,00 *</td>
+              <td><span class="new badge green" data-badge-caption="">Entregue</span></td>
+            </tr>
+            <tr>
+              <td>Total a pagar</td>
+              <td></td>
+              <td>R$17,00</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="dividiu_asterisco">
+          <p class="flow-text center-align">
+            * Compras divididas com outras pessoas
+          </p>
+        </div>
+
+        <div class="row">
+          <div class="row">
+            <a class="waves-effect waves-light btn col s6 offset-s3 red lighten-1"><i class="material-icons">remove_shopping_cart</i>   Finalizar</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!--Título sugerido-->
+    <title>Mesa</title>
+    <!--Jquery-->
+    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+    <!--Materialize-->
+    <script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
+    <!--Ícones-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='icons/google/material/iconfont/material-icons.css') }}">
+    <!--Otimizado para mobile-->
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <!--Meu CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/image.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mesa.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/niveis.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/paraimg.css') }}">
+    <!--Init-->
+    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/niver.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/select.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/autoc.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/paraimg.js') }}"></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-wrapper red darken-4">
+          <a href="{{ url_for('index') }}" class="brand-logo">SysBar</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+  <div class="numero_mesa">
+    <div class="row">
+      <form class="col s12" style="margin-top:60px">
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">bookmark</i>
+            <input id="number" type="number" class="validate">
+            <label for="number" >Número da mesa</label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <p id="rStatus" style="display: none;"></p>
+    <script src="{{ url_for('static', filename='sysbar-js/submit.js') }}"></script>      
+      <a id="sb_loading" class="waves-effect waves-light btn col s6 offset-s3 red lighten-1" onClick="submit_table('{{ url_for('api_set_table') }}');">Confirmar</a>
+    </div>
+  </div>
+  </div>
+  </body>
+</html>
