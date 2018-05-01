@@ -275,7 +275,7 @@ class UiBox(Gtk.Window):
         # Informações da sessão
         data = SbSession()
         session = data.get_info()
-        label = Gtk.Label("Usuário: {} ({})".format(session['user']['username'], session['user']['name']), halign="center", valign="end", margin_bottom=10)
+        label = Gtk.Label("Usuário: {} | Username: {} | Nível: {}".format(session['user']['name'], session['user']['username'], session['user']['level']), halign="center", valign="end", margin_bottom=10)
         box.pack_start(label, True, True, 0)
 
         # Copyright

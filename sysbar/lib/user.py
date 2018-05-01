@@ -37,14 +37,14 @@ class SbUser():
         return {'rStatus':1, 'data':result[0]}
     
     def get_user_list(self):
-        self.cursor.execute("SELECT ID_user, username, user_nicename, user_phone, user_level FROM sb_users WHERE user_status='active'")
+        self.cursor.execute("SELECT ID_user, username, user_nicename, user_phone, user_level FROM sb_users WHERE user_status=1")
         result = self.cursor.fetchall()
         if not result:
             return {'rStatus':0}
         return {'rStatus':1, 'data':result}
 
     def get_user_info(self):
-        self.cursor.execute("SELECT ID_user, username, user_nicename, user_phone, user_email, user_birthday, user_address FROM sb_users WHERE ID_user='{}' LIMIT 1".format(self.get_user_id()))
+        self.cursor.execute("SELECT ID_user, username, user_nicename, user_phone, user_email, user_birthday, user_address, user_level, user_register FROM sb_users WHERE ID_user='{}' LIMIT 1".format(self.get_user_id()))
         result = self.cursor.fetchone()
         if not result:
             return {'rStatus':0}
@@ -106,6 +106,23 @@ class SbDUser(SbUser, ValidateInput):
     def change_contacts(self, args):
         try:
             self.cursor.execute("""UPDATE sb_users SET user_phone="{}", user_email="{}" WHERE ID_user={}""".format(args[0], args[1], self.userId))
+            self.conn.commit()
+            return True
+        except:
+            return False
+
+    def change_level(self, level):
+        try:
+            self.cursor.execute("""UPDATE sb_users SET user_level="{}" WHERE ID_user={}""".format(level, self.userId))
+            self.conn.commit()
+            return True
+        except:
+            return False
+
+    def change_pin(self, pin):
+        try:
+            crypt = SbCrypt()
+            self.cursor.execute("""UPDATE sb_users SET user_pin="{}" WHERE ID_user={}""".format(crypt.encrypt(pin), self.userId))
             self.conn.commit()
             return True
         except:

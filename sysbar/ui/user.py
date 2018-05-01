@@ -14,14 +14,16 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+from gi.repository.GdkPixbuf import Pixbuf
 import requests, json
 from sysbar.ui.dialog import UiDialog
 from sysbar.lib.user import SbUser, SbDUser
 from sysbar.lib.validation import SbFormatString
+from sysbar.lib.session import SbSession
 class UiUserList(Gtk.Window):
 
     def __init__(self):
-        Gtk.Window.__init__(self, title="Lista de usuários - SysBar", window_position="center")
+        Gtk.Window.__init__(self, title="Lista de usuários", window_position="center")
         self.set_default_size(800, 600)
         grid = Gtk.Grid(margin=20)
         self.add(grid)
@@ -133,9 +135,10 @@ class UiUserInfo(Gtk.Window):
         
         # Título
         label = Gtk.Label(margin_bottom=30, halign="start")
-        label.set_markup("<span size='20000'>Informações do usuário</span>")
+        label.set_markup("<span size='20000'>Informações</span>")
         grid.attach(label, 1, 1, 4, 1)
-        
+
+        # Informações
         label = Gtk.Label(halign="start")
         label.set_markup("Nome: <span color='blue'>{}</span>".format(data['data'][2]))
         grid.attach(label, 1, 2, 3, 1)
@@ -188,48 +191,67 @@ class UiUserInfo(Gtk.Window):
         separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL, margin_top=10, margin_bottom=10)
         grid.attach(separator, 1, 7, 7, 1)
 
+        # Título
+        label = Gtk.Label(halign="start")
+        label.set_label("Alterar informações:")
+        grid.attach(label, 1, 8, 7, 1)
+
         # Novo grid
         grid2 = Gtk.Grid()
         grid2.set_column_spacing(10)
-        grid.attach(grid2, 1, 8, 7, 1)
+        grid2.set_row_spacing(10)
+        grid.attach(grid2, 1, 9, 7, 1)
 
         # Botões
-        button = Gtk.Button(height_request=40)
-        button.set_label("Alterar endereço")
+        button = Gtk.Button(width_request=100, height_request=40)
+        button.set_label("Endereço")
         button.connect("clicked", self.show_new_address, data['data'][0])
         grid2.attach(button, 1, 1, 1, 1)
         
-        button = Gtk.Button()
-        button.set_label("Alterar nome")
+        button = Gtk.Button(width_request=100)
+        button.set_label("Nome")
         button.connect("clicked", self.show_update_name, data['data'][0], data['data'][2])
         grid2.attach(button, 2, 1, 1, 1)
         
-        button = Gtk.Button()
-        button.set_label("Alterar contatos")
+        button = Gtk.Button(width_request=100)
+        button.set_label("Contato")
         button.connect("clicked", self.show_change_contacts, [data['data'][0], data['data'][3], data['data'][4]])
         grid2.attach(button, 3, 1, 1, 1)
         
-        button = Gtk.Button()
-        button.set_label("Alterar PIN")
-        button.connect("clicked", self.show_new_pin, data['data'][0])
+        button = Gtk.Button(width_request=100)
+        button.set_label("Permissão")
+        button.connect("clicked", self.show_new_level, [data['data'][0], data['data'][7]])
         grid2.attach(button, 4, 1, 1, 1)
-        
-        button = Gtk.Button()
+
+        button = Gtk.Button(width_request=100)
+        button.set_label("PIN")
+        button.connect("clicked", self.show_new_pin, [data['data'][0], data['data'][1], data['data'][7]])
+        grid2.attach(button, 5, 1, 1, 1)
+
+        # Separator
+        separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL, margin_top=10, margin_bottom=10)
+        grid2.attach(separator, 1, 2, 5, 1)
+
+        label = Gtk.Label()
+        label.set_label("Registrado em: {}".format(data['data'][8][:-7]))
+        grid2.attach(label, 1, 3, 3, 1)
+
+        button = Gtk.Button(width_request=100, height_request=40)
         button.set_label("Atualizar")
         button.connect("clicked", self.update_window, userId)
-        grid2.attach(button, 5, 1, 1, 1)
+        grid2.attach(button, 4, 3, 1, 1)
         
-        button = Gtk.Button()
+        button = Gtk.Button(width_request=100)
         button.set_label("Fechar")
         button.connect("clicked", self.destroy_window)
-        grid2.attach(button, 6, 1, 1, 1)
+        grid2.attach(button, 5, 3, 1, 1)
     
     def show_new_address(self, widget, clientId):
         win = UiNewAddress(clientId)
         win.show_all()
     
-    def show_new_pin(self, widget, clientId):
-        win = UiNewPin(clientId)
+    def show_new_pin(self, widget, data):
+        win = UiNewPin(data)
         win.show_all()
     
     def show_update_name(self, widget, userId, name):
@@ -238,6 +260,10 @@ class UiUserInfo(Gtk.Window):
     
     def show_change_contacts(self, widget, data):
         win = UiChangeContacts(data)
+        win.show_all()
+    
+    def show_new_level(self, widget, data):
+        win = UiChangeLevel(data)
         win.show_all()
     
     def update_window(self, widget, userId):
@@ -365,7 +391,7 @@ class UiNewUser(Gtk.Window):
 class UiNewAddress(Gtk.Window):
 
     def __init__(self, userId):
-        Gtk.Window.__init__(self, title="Novo endereço", window_position="center")
+        Gtk.Window.__init__(self, title="Endereço", window_position="center")
         self.set_resizable(False)
         grid = Gtk.Grid(margin=20)
         grid.set_row_spacing(10)
@@ -374,7 +400,7 @@ class UiNewAddress(Gtk.Window):
 
         # Título
         label = Gtk.Label(margin_bottom=30, halign="start")
-        label.set_markup("<span size='20000'>Novo endereço</span>")
+        label.set_markup("<span size='20000'>Endereço</span>")
         grid.attach(label, 1, 1, 1, 1)
 
         # CEP
@@ -503,11 +529,85 @@ class UiNewAddress(Gtk.Window):
         if not result:
             return UiDialog("Erro ao enviar", "Erro ao inserir as informações no banco de dados.")
 
+class UiChangeLevel(Gtk.Window):
+
+    def __init__(self, data):
+        Gtk.Window.__init__(self, title="Alterar nível de permissão", window_position="center")
+        self.set_resizable(False)
+
+        check = SbSession()
+        if check.check_level(True)!=3:
+            UiDialog('Erro de permissão!', 'Somente usuários com o nível 3 podem alterar permissões.')
+            return self.destroy()
+        
+        grid = Gtk.Grid(margin=40)
+        grid.set_row_spacing(10)
+        grid.set_column_spacing(10)
+        self.add(grid)
+
+        # Título
+        label = Gtk.Label(margin_bottom=30, halign="start")
+        label.set_markup("<span size='20000'>Alterar nível de permissão</span>")
+        grid.attach(label, 1, 1, 1, 1)
+
+        # Nível de permisão
+        label = Gtk.Label(halign="start")
+        label.set_markup("Nível de permisão:<span color='red'>*</span>")
+        grid.attach(label, 1, 2, 1, 1)
+
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        grid.attach(box, 1, 3, 1, 1)
+
+        self.level = data[1]
+        radiobutton1 = Gtk.RadioButton(label="Nível 1")
+        radiobutton1.connect("toggled", self.on_radio_button_toggled)
+        box.pack_start(radiobutton1, True, True, 0)
+        radiobutton2 = Gtk.RadioButton(label="Nível 2", group=radiobutton1)
+        radiobutton2.connect("toggled", self.on_radio_button_toggled)
+        box.pack_start(radiobutton2, True, True, 0)
+        radiobutton3 = Gtk.RadioButton(label="Nível 3", group=radiobutton1)
+        radiobutton3.connect("toggled", self.on_radio_button_toggled)
+        box.pack_start(radiobutton3, True, True, 0)
+
+        if self.level==1:
+            radiobutton1.set_active(True)            
+        elif self.level==2:
+            radiobutton2.set_active(True)            
+        else:
+            radiobutton3.set_active(True)
+        
+        # Separator
+        separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL, margin_top=10, margin_bottom=10)
+        grid.attach(separator, 1, 4, 1, 1)
+
+        button = Gtk.Button(height_request=40)
+        button.set_label("Atualizar")
+        button.connect("clicked", self.submit, data[0])
+        grid.attach(button, 1, 5, 1, 1)
+    
+    def on_radio_button_toggled(self, radiobutton):
+        if radiobutton.get_active():
+            self.level = radiobutton.get_label()[-1:]
+    
+    def submit(self, widget, userId):
+        change = SbDUser(userId)
+        self.destroy()
+        if not change.change_level(self.level):
+            return UiDialog("Erro!", "Erro ao enviar dados.")
+
 class UiNewPin(Gtk.Window):
 
-    def __init__(self, clientId):
+    def __init__(self, data):
         Gtk.Window.__init__(self, title="Alterar PIN", window_position="center")
         self.set_resizable(False)
+        
+        session = SbSession()
+        info = session.get_info()
+        if info['user']['username']!=data[1]:
+            if info['user']['level']!=3:
+                UiDialog('Erro de permissão!', 'Somente usuários com o nível 3 podem alterar senhas de outros usuários.')
+                return self.destroy()
+        
         grid = Gtk.Grid(margin=40)
         grid.set_row_spacing(10)
         grid.set_column_spacing(10)
@@ -518,27 +618,14 @@ class UiNewPin(Gtk.Window):
         label.set_markup("<span size='20000'>Alterar PIN</span>")
         grid.attach(label, 1, 1, 1, 1)
 
-        # Senha antiga
-        label = Gtk.Label(halign="start")
-        label.set_label("PIN atual:")
-        self.currentPin = Gtk.Entry(width_request=200)
-        grid.attach(label, 1, 2, 1, 1)
-        grid.attach(self.currentPin, 1, 3, 1, 1)
-
         # Nova senha
         label = Gtk.Label(halign="start")
         label.set_label("Novo PIN: (4 números)")
-        self.newPin = Gtk.Entry(max_length=4)
-        self.newPin.set_input_purpose(Gtk.InputPurpose.NUMBER)
-        grid.attach(label, 1, 4, 1, 1)
-        grid.attach(self.newPin, 1, 5, 1, 1)
-
-        # Confirmar nova senha
-        # label = Gtk.Label(halign="start")
-        # label.set_label("Confirmar novo PIN:")
-        # self.confirmPass = Gtk.Entry(max_length=4)
-        # grid.attach(label, 1, 6, 1, 1)
-        # grid.attach(self.confirmPass, 1, 7, 1, 1)
+        self.pin = Gtk.Entry(max_length=4)
+        self.pin.set_input_purpose(Gtk.InputPurpose.NUMBER)
+        self.pin.connect("activate", self.update_pin, data[0])
+        grid.attach(label, 1, 2, 1, 1)
+        grid.attach(self.pin, 1, 3, 1, 1)
 
         # Separator
         separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL, margin_top=10, margin_bottom=10)
@@ -546,20 +633,19 @@ class UiNewPin(Gtk.Window):
 
         # Enviar
         button = Gtk.Button(label="Atualizar", height_request=40)
-        button.connect("clicked", self.update_pin, clientId)
+        button.connect("clicked", self.update_pin, data[0])
         grid.attach(button, 1, 9, 1, 1)
     
-    def update_pin(self, widget, clientId):
-        pin = self.newPin.get_text()
-        if len(str(pin))<4 or len(str(pin))>4:
+    def update_pin(self, widget, userId):
+        pin = self.pin.get_text().strip()
+        if not pin or len(str(pin))<4 or len(str(pin))>4:
             return UiDialog("Entrada inválida", "Por favor preencha os campos corretamente.")
-        submit = SbClient(clientId)
-        result = submit.change_password(self.currentPin.get_text(), pin)
+        if not pin.isdigit():
+            return UiDialog("Entrada inválida", "Por favor preencha os campos corretamente.")
+        submit = SbDUser(userId)
         self.destroy()
-        if result['rStatus']==0:
-            return UiDialog("Erro ao enviar dados", "Erro ao inserir informações no banco de dados.")
-        elif result['rStatus']==4:
-            return UiDialog("Erro!", "PIN atual incorreto.")
+        if not submit.change_pin(pin):
+            return UiDialog("Erro!", "Erro ao enviar dados.")
 
 class UiUpdateUserName(Gtk.Window):
 
@@ -590,7 +676,9 @@ class UiUpdateUserName(Gtk.Window):
         grid.attach(button, 1, 4, 1, 1)
     
     def update_name(self, widget, userId):
-        name = self.name.get_text()
+        name = self.name.get_text().strip()
+        if not name:
+            return UiDialog("Entrada inválida!", "Por favor preencha os campos corretamente.")
         submit = SbDUser(userId)
         self.destroy()
         if not submit.change_name(name):
@@ -636,36 +724,4 @@ class UiChangeContacts(Gtk.Window):
         submit = SbDUser(userId)
         if not submit.change_contacts([self.number.get_text(), self.email.get_text()]):
             return UiDialog("Entrada inválida", "Por favor preencha os campos corretamente.")
-        return self.destroy()
-
-class UiDeleteAddress(Gtk.Window):
-
-    def __init__(self, addressId):
-        Gtk.Window.__init__(self, title="Deletar Endereço?", window_position="center")
-        self.set_resizable(False)
-        grid = Gtk.Grid(margin=40)
-        grid.set_row_spacing(30)
-        grid.set_column_spacing(10)
-        self.add(grid)
-
-        # Título
-        label = Gtk.Label(halign="center")
-        label.set_markup("<span size='20000'>Deseja deletar o endereço?</span>")
-        grid.attach(label, 1, 1, 2, 1)
-
-        button = Gtk.Button(label="Não")
-        button.connect("clicked", self.destroy_window)
-        grid.attach(button, 1, 2, 1, 1)
-
-        button = Gtk.Button(label="Sim", height_request=40)
-        button.connect("clicked", self.delete_address, addressId)
-        grid.attach(button, 2, 2, 1, 1)
-    
-    def delete_address(self, widget, addressId):
-        self.destroy()
-        submit = SbDClient()
-        if not submit.delete_address(addressId):
-            return UiDialog("Erro", "Erro ao deletar endereço.")
-    
-    def destroy_window(self, widget):
         return self.destroy()

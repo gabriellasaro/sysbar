@@ -26,9 +26,10 @@ class Window(Gtk.Window):
         Gtk.Window.__init__(self, title="Entrar - SysBar", window_position="center", modal=True, icon_name="system-lock-screen")
         self.set_resizable(False)
 
+        # Ativa o tema escolhido.
         self.active_theme()
 
-        self.box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6, margin=40, halign="center", valign="center")
+        self.box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6, margin=60, halign="center", valign="center")
         self.add(self.box)
 
         self.pix = Pixbuf.new_from_file_at_size("icon/logo.svg", 220, 120)
@@ -36,7 +37,7 @@ class Window(Gtk.Window):
         self.img1.set_from_pixbuf(self.pix)
         self.box.pack_start(self.img1, True, True, 0)
 
-        self.label = Gtk.Label("Username:")
+        self.label = Gtk.Label(label="Username:", margin_top=10)
         self.box.pack_start(self.label, True, True, 0)
 
         self.username = Gtk.Entry(max_length=120, input_purpose="alpha")
@@ -44,11 +45,12 @@ class Window(Gtk.Window):
         self.username.set_text(self.select_last_user())
         self.box.pack_start(self.username, True, True, 0)
 
-        self.label = Gtk.Label("Senha:")
+        self.label = Gtk.Label("PIN:")
         self.box.pack_start(self.label, True, True, 0)
 
         self.pin = Gtk.Entry(max_length=120, input_purpose="password", visibility=False, activates_default=True)
         # Valor predefinido no campo.
+        self.pin.set_text('1234')
         self.pin.connect("activate", self.on_button1_clicked)
         self.box.pack_start(self.pin, True, True, 0)
 
