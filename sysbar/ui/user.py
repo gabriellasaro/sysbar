@@ -168,7 +168,7 @@ class UiUserInfo(Gtk.Window):
         addr = json.loads(data['data'][6])
         
         label = Gtk.Label(halign="start")
-        label.set_markup("Logradouro: <span color='blue'>{}</span>".format(addr['street']))
+        label.set_markup("Logradouro: <span color='blue'>{} - {}</span>".format(addr['cep'], addr['street']))
         grid.attach(label, 5, 2, 3, 1)
         
         label = Gtk.Label(halign="start")
@@ -197,7 +197,7 @@ class UiUserInfo(Gtk.Window):
         grid.attach(label, 1, 8, 7, 1)
 
         # Novo grid
-        grid2 = Gtk.Grid()
+        grid2 = Gtk.Grid(halign="center")
         grid2.set_column_spacing(10)
         grid2.set_row_spacing(10)
         grid.attach(grid2, 1, 9, 7, 1)
@@ -210,12 +210,12 @@ class UiUserInfo(Gtk.Window):
         
         button = Gtk.Button(width_request=100)
         button.set_label("Nome")
-        button.connect("clicked", self.show_update_name, data['data'][0], data['data'][2])
+        button.connect("clicked", self.show_update_name, [data['data'][0], data['data'][1], data['data'][2]])
         grid2.attach(button, 2, 1, 1, 1)
         
         button = Gtk.Button(width_request=100)
         button.set_label("Contato")
-        button.connect("clicked", self.show_change_contacts, [data['data'][0], data['data'][3], data['data'][4]])
+        button.connect("clicked", self.show_change_contacts, [data['data'][0], data['data'][1], data['data'][3], data['data'][4]])
         grid2.attach(button, 3, 1, 1, 1)
         
         button = Gtk.Button(width_request=100)
@@ -246,16 +246,16 @@ class UiUserInfo(Gtk.Window):
         button.connect("clicked", self.destroy_window)
         grid2.attach(button, 5, 3, 1, 1)
     
-    def show_new_address(self, widget, clientId):
-        win = UiNewAddress(clientId)
+    def show_new_address(self, widget, userId):
+        win = UiNewAddress(userId)
         win.show_all()
     
     def show_new_pin(self, widget, data):
         win = UiNewPin(data)
         win.show_all()
     
-    def show_update_name(self, widget, userId, name):
-        win = UiUpdateUserName(userId, name)
+    def show_update_name(self, widget, data):
+        win = UiUpdateUserName(data)
         win.show_all()
     
     def show_change_contacts(self, widget, data):
@@ -279,6 +279,12 @@ class UiNewUser(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="Cadastro de usuário", window_position="center")
         self.set_resizable(False)
+
+        session = SbSession()
+        if session.check_level()!=3:
+            UiDialog('Erro de permissão!', 'Somente usuários com o nível 3 podem criar novos usuários.')
+            return self.destroy()
+        
         grid = Gtk.Grid(margin=20)
         grid.set_row_spacing(10)
         grid.set_column_spacing(10)
@@ -393,6 +399,12 @@ class UiNewAddress(Gtk.Window):
     def __init__(self, userId):
         Gtk.Window.__init__(self, title="Endereço", window_position="center")
         self.set_resizable(False)
+        
+        session = SbSession()
+        if session.check_level()!=3:
+            UiDialog('Erro de permissão!', 'Somente usuários com o nível 3 podem inserir e/ou alterar endereços.')
+            return self.destroy()
+        
         grid = Gtk.Grid(margin=20)
         grid.set_row_spacing(10)
         grid.set_column_spacing(10)
@@ -413,7 +425,7 @@ class UiNewAddress(Gtk.Window):
 
         # Rua
         label = Gtk.Label(halign="start")
-        label.set_markup("Rua<span color='red'>*</span>:")
+        label.set_markup("Logradouro<span color='red'>*</span>:")
         self.street = Gtk.Entry(max_length=120)
         grid.attach(label, 1, 4, 1, 1)
         grid.attach(self.street, 1, 5, 3, 1)
@@ -435,7 +447,7 @@ class UiNewAddress(Gtk.Window):
 
         # Bairro
         label = Gtk.Label(halign="start")
-        label.set_markup("Bairro<span color='red'>*</span>:")
+        label.set_markup("Bairro/Distrito<span color='red'>*</span>:")
         self.bairro = Gtk.Entry(max_length=120)
         grid.attach(label, 1, 8, 1, 1)
         grid.attach(self.bairro, 1, 9, 2, 1)
@@ -649,9 +661,17 @@ class UiNewPin(Gtk.Window):
 
 class UiUpdateUserName(Gtk.Window):
 
-    def __init__(self, userId, name):
+    def __init__(self, data):
         Gtk.Window.__init__(self, title="Alterar nome", window_position="center")
         self.set_resizable(False)
+
+        session = SbSession()
+        info = session.get_info()
+        if info['user']['username']!=data[1]:
+            if info['user']['level']!=3:
+                UiDialog('Erro de permissão!', 'Somente usuários com o nível 3 podem alterar informações de outros usuários.')
+                return self.destroy()
+        
         grid = Gtk.Grid(margin=40)
         grid.set_row_spacing(10)
         grid.set_column_spacing(10)
@@ -665,14 +685,14 @@ class UiUpdateUserName(Gtk.Window):
         # Nome
         label = Gtk.Label(label="Nome completo:")
         self.name = Gtk.Entry(width_request=350)
-        self.name.set_text(name)
-        self.name.connect("activate", self.update_name, userId)
+        self.name.set_text(data[2])
+        self.name.connect("activate", self.update_name, data[0])
         grid.attach(label, 1, 2, 1, 1)
         grid.attach(self.name, 1, 3, 1, 1)
 
         # Enviar
         button = Gtk.Button(label="Atualizar", height_request=40)
-        button.connect("clicked", self.update_name, userId)
+        button.connect("clicked", self.update_name, data[0])
         grid.attach(button, 1, 4, 1, 1)
     
     def update_name(self, widget, userId):
@@ -689,6 +709,14 @@ class UiChangeContacts(Gtk.Window):
     def __init__(self, data):
         Gtk.Window.__init__(self, title="Alterar informações de contato", window_position="center")
         self.set_resizable(False)
+
+        session = SbSession()
+        info = session.get_info()
+        if info['user']['username']!=data[1]:
+            if info['user']['level']!=3:
+                UiDialog('Erro de permissão!', 'Somente usuários com o nível 3 podem alterar informações de outros usuários.')
+                return self.destroy()
+        
         grid = Gtk.Grid(margin=40)
         grid.set_row_spacing(10)
         grid.set_column_spacing(10)
@@ -702,7 +730,7 @@ class UiChangeContacts(Gtk.Window):
         # Telefone
         label = Gtk.Label(label="Número:")
         self.number = Gtk.Entry(max_length=20, width_request=200)
-        self.number.set_text(data[1])
+        self.number.set_text(data[2])
         self.number.connect("activate", self.update, data[0])
         grid.attach(label, 1, 2, 1, 1)
         grid.attach(self.number, 1, 3, 1, 1)
@@ -710,7 +738,7 @@ class UiChangeContacts(Gtk.Window):
         # E-mail
         label = Gtk.Label(label="E-mail:")
         self.email = Gtk.Entry(max_length=200, width_request=200)
-        self.email.set_text(data[2])
+        self.email.set_text(data[3])
         self.email.connect("activate", self.update, data[0])
         grid.attach(label, 1, 4, 1, 1)
         grid.attach(self.email, 1, 5, 1, 1)

@@ -79,7 +79,7 @@ class SbDUser(SbUser, ValidateInput):
     
     def insert_address(self, args):
         data = {
-            'CEP':args[0],
+            'cep':args[0],
             'house':args[1],
             'street':args[2],
             'complement':args[3],
