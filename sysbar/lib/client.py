@@ -70,18 +70,6 @@ class SbClient():
         else:
             return False
     
-    def change_password(self, currentPin, newPin):
-        if not self.check_pin(currentPin):
-            return {'rStatus':4}
-        
-        try:
-            crypt = SbCrypt()
-            self.cursor.execute("""UPDATE sb_client SET client_pin="{}" WHERE ID_client={}""".format(crypt.encrypt(newPin), self.clientId))
-            self.conn.commit()
-            return {'rStatus':1}
-        except:
-            return {'rStatus':0}
-
     def change_name(self, name):
         validate = ValidateInput()
         if not validate.validate_name(name):
@@ -150,6 +138,15 @@ class SbDClient(SbClient, ValidateInput):
     def delete_address(self, addressId):
         try:
             self.cursor.execute("DELETE FROM sb_delivery_address WHERE ID_address={}".format(addressId))
+            self.conn.commit()
+            return True
+        except:
+            return False
+    
+    def update_pin(self, newPin):
+        try:
+            crypt = SbCrypt()
+            self.cursor.execute("""UPDATE sb_client SET client_pin="{}" WHERE ID_client={}""".format(crypt.encrypt(newPin), self.clientId))
             self.conn.commit()
             return True
         except:

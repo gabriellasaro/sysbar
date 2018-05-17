@@ -417,27 +417,13 @@ class UiNewPin(Gtk.Window):
         label.set_markup("<span size='20000'>Alterar PIN</span>")
         grid.attach(label, 1, 1, 1, 1)
 
-        # Senha antiga
-        label = Gtk.Label(halign="start")
-        label.set_label("PIN atual:")
-        self.currentPin = Gtk.Entry(width_request=200)
-        grid.attach(label, 1, 2, 1, 1)
-        grid.attach(self.currentPin, 1, 3, 1, 1)
-
-        # Nova senha
+        # Nova PIN
         label = Gtk.Label(halign="start")
         label.set_label("Novo PIN: (4 números)")
         self.newPin = Gtk.Entry(max_length=4)
         self.newPin.set_input_purpose(Gtk.InputPurpose.NUMBER)
         grid.attach(label, 1, 4, 1, 1)
         grid.attach(self.newPin, 1, 5, 1, 1)
-
-        # Confirmar nova senha
-        # label = Gtk.Label(halign="start")
-        # label.set_label("Confirmar novo PIN:")
-        # self.confirmPass = Gtk.Entry(max_length=4)
-        # grid.attach(label, 1, 6, 1, 1)
-        # grid.attach(self.confirmPass, 1, 7, 1, 1)
 
         # Separator
         separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL, margin_top=10, margin_bottom=10)
@@ -452,13 +438,10 @@ class UiNewPin(Gtk.Window):
         pin = self.newPin.get_text()
         if len(str(pin))<4 or len(str(pin))>4:
             return UiDialog("Entrada inválida", "Por favor preencha os campos corretamente.")
-        submit = SbClient(clientId)
-        result = submit.change_password(self.currentPin.get_text(), pin)
         self.destroy()
-        if result['rStatus']==0:
+        submit = SbDClient(clientId)
+        if not submit.update_pin(pin):
             return UiDialog("Erro ao enviar dados", "Erro ao inserir informações no banco de dados.")
-        elif result['rStatus']==4:
-            return UiDialog("Erro!", "PIN atual incorreto.")
 
 class UiUpdateClientName(Gtk.Window):
 
