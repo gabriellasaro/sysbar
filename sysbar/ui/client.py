@@ -22,7 +22,7 @@ class UiCustomerList(Gtk.Window):
 
     def __init__(self):
         Gtk.Window.__init__(self, title="Lista de clientes - SysBar", window_position="center")
-        self.set_default_size(800, 600)
+        self.set_default_size(1000, 800)
         grid = Gtk.Grid(margin=20)
         self.add(grid)
 
@@ -109,7 +109,7 @@ class UiCustomerList(Gtk.Window):
 class UiCustomerInfo(Gtk.Window):
 
     def __init__(self, customerPhone):
-        Gtk.Window.__init__(self, title="Informações sobre o cliente", window_position="center")
+        Gtk.Window.__init__(self, title="Informações do cliente", window_position="center")
         grid = Gtk.Grid(margin=20)
         grid.set_row_spacing(10)
         grid.set_column_spacing(10)
@@ -177,7 +177,7 @@ class UiCustomerInfo(Gtk.Window):
             treeview.set_hexpand(True)
             treeview.connect("row-activated", self.on_row_activated)
 
-            scrolledwindow = Gtk.ScrolledWindow()
+            scrolledwindow = Gtk.ScrolledWindow(height_request=160)
             scrolledwindow.add(treeview)
             grid.attach(scrolledwindow, 1, 8, 7, 1)
 
