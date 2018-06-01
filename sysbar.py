@@ -20,6 +20,7 @@ from sysbar.ui.box import UiBox
 from sysbar.ui.dialog import UiDialog
 from sysbar.lib.settings import SbTheme
 from sysbar.lib.session import SbLogin
+import subprocess
 class Window(Gtk.Window):
 
     def __init__(self):
@@ -125,7 +126,7 @@ class Window(Gtk.Window):
                 style_provider,
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             )
-
+subprocess.Popen('./update.py')
 win = Window()
 win.connect("delete-event", Gtk.main_quit)
 win.show_all()

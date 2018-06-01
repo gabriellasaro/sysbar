@@ -15,14 +15,14 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 from gi.repository.GdkPixbuf import Pixbuf
-from sysbar.ui.products import UiListProducts, UiNewProduct
+from sysbar.ui.products.new import UiNewProduct
+from sysbar.ui.products.products import UiListProducts
 from sysbar.ui.client import UiCustomerList
-from sysbar.ui.user import UiUserList 
+from sysbar.ui.user import UiUserList
 from sysbar.ui.about import AboutSystem
 from sysbar.ui.dialog import UiDialog
 from sysbar.lib.settings import SbStoreInfo, SbTheme, SbBackup
 from sysbar.lib.session import SbSession
-import subprocess
 class UiAdmin(Gtk.Window):
         
     def __init__(self):
@@ -151,7 +151,7 @@ class UiAdmin(Gtk.Window):
 class UiStoreInfo(Gtk.Window):
 
     def __init__(self):
-        Gtk.Window.__init__(self, title="Informações do estabelecimento - SysBar", window_position="center")
+        Gtk.Window.__init__(self, title="Informações do estabelecimento", window_position="center")
         self.set_resizable(False)
         
         grid = Gtk.Grid(margin=20)
@@ -291,36 +291,40 @@ class UiStoreInfo(Gtk.Window):
 class UiSupport(Gtk.Window):
 
     def __init__(self):
-        Gtk.Window.__init__(self, title="Suporte - SysBar", window_position="center")
+        Gtk.Window.__init__(self, title="Suporte", window_position="center")
         self.set_resizable(False)
 
-        grid = Gtk.Grid(margin=80)
+        grid = Gtk.Grid(margin=40)
+        grid.set_column_spacing(10)
+        grid.set_row_spacing(10)
         self.add(grid)
 
         # Título
-        label = Gtk.Label(margin_bottom=30, halign="center")
-        label.set_markup("<span size='20000'>Suporte</span>")
+        label = Gtk.Label(margin_bottom=20, halign="center")
+        label.set_markup("<span size='21000'>Suporte</span>")
         grid.attach(label, 1, 1, 1, 1)
 
-        label = Gtk.Label(margin_bottom=10)
-        label.set_label("Telefone para contado:")
+        label = Gtk.Label()
+        label.set_label("Contado:")
         grid.attach(label, 1, 2, 1, 1)
-        label = Gtk.Label("WhatsApp: (27) 37434062")
-        grid.attach(label, 1, 3, 1, 1)        
 
-        label = Gtk.Label(margin_top=10, margin_bottom=10)
-        label.set_label("E-mail:")
-        grid.attach(label, 1, 6, 1, 1)
-        label = Gtk.Label("contato@sysbar.info")
-        grid.attach(label, 1, 7, 1, 1)
+        label = Gtk.Label()
+        label.set_label("Se precissar de ajuda não deixe de entrar em contato, estamos a disposição!")
+        grid.attach(label, 1, 3, 1, 1)
+
+        label = Gtk.LinkButton("https://www.sysbar.info/#cont", "Acessar www.sysbar.info")
+        grid.attach(label, 1, 4, 1, 1)
+
+        label = Gtk.LinkButton("http://api.whatsapp.com/send?phone=552737434062", "Whatsapp: (27) 37434062")
+        grid.attach(label, 1, 5, 1, 1)
 
 class UiTheme(Gtk.Window):
 
     def __init__(self):
-        Gtk.Window.__init__(self, title="Temas - SysBar", window_position="center")
+        Gtk.Window.__init__(self, title="Temas", window_position="center")
         self.set_resizable(False)
 
-        grid = Gtk.Grid(margin=20)
+        grid = Gtk.Grid(margin=40)
         self.add(grid)
 
         # Título
@@ -352,25 +356,30 @@ class UiTheme(Gtk.Window):
 class UiLicense(Gtk.Window):
 
     def __init__(self):
-        Gtk.Window.__init__(self, title="Licenciado - SysBar", window_position="center")
+        Gtk.Window.__init__(self, title="Licenciado", window_position="center")
         self.set_resizable(False)
 
         grid = Gtk.Grid(margin=40)
         self.add(grid)
 
+        # Título
+        label = Gtk.Label(margin_bottom=30, halign="start", margin_right=20)
+        label.set_markup("<span size='20000'>Licenciado</span>")
+        grid.attach(label, 1, 1, 1, 1)
+
         label = Gtk.Label(margin_bottom=60, halign="center")
         info = SbStoreInfo()
         data = info.get_store_info()
         if data['rStatus']==1:
-            label.set_label("Este software foi licenciado para {}.".format(info.get_store_info()['data']['store']['name']))
+            label.set_label("Este software foi licenciado por SysBar para {}.".format(info.get_store_info()['data']['store']['name']))
         else:
             label.set_label("Este software foi licenciado.")
         
-        grid.attach(label, 1, 1, 1, 1)
+        grid.attach(label, 1, 2, 1, 1)
 
         label = Gtk.Label(halign="center")
         label.set_label("© COPYRIGHT 2018 SysBar")
-        grid.attach(label, 1, 2, 1, 1)
+        grid.attach(label, 1, 3, 1, 1)
 
         # progressBar = Gtk.ProgressBar(orientation=Gtk.Orientation.HORIZONTAL)
 
@@ -385,7 +394,7 @@ class UiLicense(Gtk.Window):
 class UiBackup(Gtk.Window):
 
     def __init__(self):
-        Gtk.Window.__init__(self, title="Backup - SysBar", window_position="center")
+        Gtk.Window.__init__(self, title="Backup", window_position="center")
         self.set_resizable(False)
 
         grid = Gtk.Grid(margin=40)

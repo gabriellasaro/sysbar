@@ -24,7 +24,7 @@ from sysbar.ui.about import AboutSystem
 from sysbar.ui.tables import UiTableList
 from sysbar.ui.admin import UiAdmin
 from sysbar.ui.client import UiCustomerList, UiNewCustomer, UiCustomerInfo
-from sysbar.ui.comanda import UiBuy
+# from sysbar.ui.comanda import UiBuy
 class UiBox(Gtk.Window):
 
     # def __init__(self):
@@ -120,8 +120,9 @@ class UiBox(Gtk.Window):
         listPhone = Gtk.ListStore(str)
         customers = SbClient()
         data = customers.get_customer_list()
-        for client in data['data']:
-            listPhone.append([client[1]])
+        if data['rStatus']==1:
+            for client in data['data']:
+                listPhone.append([client[1]])
 
         entrycompletion = Gtk.EntryCompletion()
         entrycompletion.set_model(listPhone)

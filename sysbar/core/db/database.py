@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import sqlite3
-class DataBase():
+class CreateDatabase():
     def creat_db_users(self):
         conn = sqlite3.connect('/home/gabriel/.system-bar/database/users.db')
         cursor = conn.cursor()
@@ -165,16 +165,17 @@ CREATE TABLE `sb_product` (
 	`ID_product`	INTEGER NOT NULL UNIQUE,
 	`barcode`	INTEGER,
 	`product_name`	TEXT NOT NULL,
-	`product_img`	TEXT NOT NULL,
-	`product_description`	TEXT NOT NULL,
+	`product_img`	TEXT DEFAULT 0,
+	`product_description`	TEXT,
+	`product_ingre`	TEXT,
 	`product_price`	REAL NOT NULL,
 	`product_cost`	REAL NOT NULL DEFAULT 0,
-	`product_discount`	INTEGER DEFAULT 0,
+	`free_volume`	TEXT DEFAULT '{"free":"0"}',
 	`product_stock`	INTEGER NOT NULL DEFAULT 0,
 	`stock_status`	INTEGER NOT NULL DEFAULT 0,
 	`register`	TEXT,
 	`last_change`	TEXT DEFAULT NULL,
-	PRIMARY KEY(ID_product)
+	PRIMARY KEY(`ID_product`)
 );
         """)
         cursor.execute("""
@@ -187,9 +188,8 @@ CREATE TABLE `sb_meta_product` (
 	`unity`	TEXT NOT NULL,
 	`amount`	REAL NOT NULL,
 	`people_served`	INTEGER DEFAULT 0,
-	`status`	INTEGER DEFAULT 0,
-	`register`	TEXT,
-	PRIMARY KEY(ID_product)
+	`destiny`	TEXT,
+	PRIMARY KEY(`ID_product`)
 );
         """)
         cursor.execute("""
