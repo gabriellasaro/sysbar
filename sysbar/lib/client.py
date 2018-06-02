@@ -16,7 +16,7 @@ from datetime import datetime, date
 # from platform import node
 from sysbar.lib.crypt import SbCrypt
 from sysbar.lib.validation import ValidateInput
-from sysbar.lib.tables import SbTables
+from sysbar.core.tables.tables import SbTables
 class SbClient():
 
     def __init__(self, clientId = None):

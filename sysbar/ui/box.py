@@ -21,7 +21,7 @@ from gi.repository.GdkPixbuf import Pixbuf
 from sysbar.lib.session import SbSession, SbLogout
 from sysbar.lib.client import SbClient
 from sysbar.ui.about import AboutSystem
-from sysbar.ui.tables import UiTableList
+from sysbar.ui.tables.tables import UiTableList
 from sysbar.ui.admin import UiAdmin
 from sysbar.ui.client import UiCustomerList, UiNewCustomer, UiCustomerInfo
 # from sysbar.ui.comanda import UiBuy
