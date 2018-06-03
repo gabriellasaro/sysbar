@@ -140,24 +140,24 @@ class UiUserInfo(Gtk.Window):
 
         # Informações
         label = Gtk.Label(halign="start")
-        label.set_markup("Nome: <span color='blue'>{}</span>".format(data['data'][2]))
+        label.set_markup("<span font='bold'>Nome:</span> <span color='blue'>{}</span>".format(data['data'][2]))
         grid.attach(label, 1, 2, 3, 1)
         
         label = Gtk.Label(halign="start")
-        label.set_markup("Username: <span color='blue'>{}</span>".format(data['data'][1]))
+        label.set_markup("<span font='bold'>Username:</span> <span color='blue'>{}</span>".format(data['data'][1]))
         grid.attach(label, 1, 3, 3, 1)
         
         label = Gtk.Label(halign="start")
-        label.set_markup("Telefone: <span color='blue'>{}</span>".format(data['data'][3]))
+        label.set_markup("<span font='bold'>Telefone:</span> <span color='blue'>{}</span>".format(data['data'][3]))
         grid.attach(label, 1, 4, 3, 1)
         
         label = Gtk.Label(halign="start")
-        label.set_markup("E-mail: <span color='blue'>{}</span>".format(data['data'][4]))
+        label.set_markup("<span font='bold'>E-mail:</span> <span color='blue'>{}</span>".format(data['data'][4]))
         grid.attach(label, 1, 5, 3, 1)
         
         label = Gtk.Label(halign="start")
         date = SbFormatString()
-        label.set_markup("Aniversário: <span color='blue'>{}</span>".format(date.format_date_for_string(data['data'][5])))
+        label.set_markup("<span font='bold'>Aniversário:</span> <span color='blue'>{}</span>".format(date.format_date_for_string(data['data'][5])))
         grid.attach(label, 1, 6, 3, 1)
 
         # Separator
@@ -168,23 +168,23 @@ class UiUserInfo(Gtk.Window):
         addr = json.loads(data['data'][6])
         
         label = Gtk.Label(halign="start")
-        label.set_markup("Logradouro: <span color='blue'>{} - {}</span>".format(addr['cep'], addr['street']))
+        label.set_markup("<span font='bold'>Logradouro:</span> <span color='blue'>{} - {}</span>".format(addr['cep'], addr['street']))
         grid.attach(label, 5, 2, 3, 1)
         
         label = Gtk.Label(halign="start")
-        label.set_markup("Casa nº: <span color='blue'>{}</span>, compl.: <span color='blue'>{}</span>".format(addr['house'], addr['complement']))
+        label.set_markup("<span font='bold'>Casa nº:</span> <span color='blue'>{}</span><span font='bold'>, compl.:</span> <span color='blue'>{}</span>".format(addr['house'], addr['complement']))
         grid.attach(label, 5, 3, 3, 1)
 
         label = Gtk.Label(halign="start")
-        label.set_markup("Bairro: <span color='blue'>{}</span>".format(addr['district']))
+        label.set_markup("<span font='bold'>Bairro:</span> <span color='blue'>{}</span>".format(addr['district']))
         grid.attach(label, 5, 4, 3, 1)
 
         label = Gtk.Label(halign="start")
-        label.set_markup("Cidade: <span color='blue'>{}</span>".format(addr['city']))
+        label.set_markup("<span font='bold'>Cidade:</span> <span color='blue'>{}</span>".format(addr['city']))
         grid.attach(label, 5, 5, 3, 1)
         
         label = Gtk.Label(halign="start")
-        label.set_markup("Estado: <span color='blue'>{} - {}</span>".format(addr['state'], addr['nation']))
+        label.set_markup("<span font='bold'>Estado:</span> <span color='blue'>{} - {}</span>".format(addr['state'], addr['nation']))
         grid.attach(label, 5, 6, 3, 1)
 
         # Separator
@@ -193,7 +193,7 @@ class UiUserInfo(Gtk.Window):
 
         # Título
         label = Gtk.Label(halign="start")
-        label.set_label("Alterar informações:")
+        label.set_markup("<span font='bold'>Alterar informações:</span>")
         grid.attach(label, 1, 8, 7, 1)
 
         # Novo grid
@@ -233,7 +233,7 @@ class UiUserInfo(Gtk.Window):
         grid2.attach(separator, 1, 2, 5, 1)
 
         label = Gtk.Label()
-        label.set_label("Registrado em: {}".format(data['data'][8][:-7]))
+        label.set_markup("<span font='bold'>Registrado em:</span> {}".format(data['data'][8][:-7]))
         grid2.attach(label, 1, 3, 3, 1)
 
         button = Gtk.Button(width_request=100, height_request=40)
@@ -297,14 +297,14 @@ class UiNewUser(Gtk.Window):
 
         # Nome
         label = Gtk.Label(halign="start")
-        label.set_markup("Nome completo:<span color='red'>*</span>")
+        label.set_markup("<span font='bold'>Nome completo:</span><span color='red'>*</span>")
         self.name = Gtk.Entry(max_length=120)
         grid.attach(label, 1, 2, 2, 1)
         grid.attach(self.name, 1, 3, 2, 1)
 
         # Username
         label = Gtk.Label(halign="start")
-        label.set_markup("Username:<span color='red'>*</span>")
+        label.set_markup("<span font='bold'>Username:</span><span color='red'>*</span>")
         self.username = Gtk.Entry(max_length=120)
         self.username.set_input_purpose(Gtk.InputPurpose.NUMBER)
         grid.attach(label, 3, 2, 1, 1)
@@ -312,14 +312,14 @@ class UiNewUser(Gtk.Window):
 
         # PIN
         label = Gtk.Label(halign="start")
-        label.set_markup("PIN:<span color='red'>*</span> (4 números)")
+        label.set_markup("<span font='bold'>PIN:</span><span color='red'>*</span> (4 números)")
         self.pin = Gtk.Entry(max_length=4)
         grid.attach(label, 3, 4, 1, 1)
         grid.attach(self.pin, 3, 5, 1, 1)
 
         # Nível de permisão
         label = Gtk.Label(halign="start")
-        label.set_markup("Nível de permisão:<span color='red'>*</span>")
+        label.set_markup("<span font='bold'>Nível de permisão:</span><span color='red'>*</span>")
         grid.attach(label, 1, 4, 2, 1)
 
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
@@ -342,7 +342,7 @@ class UiNewUser(Gtk.Window):
 
         # E-mail
         label = Gtk.Label(halign="start")
-        label.set_label("E-mail:")
+        label.set_markup("<span font='bold'>E-mail:</span>")
         self.email = Gtk.Entry(max_length=200)
         self.email.set_input_purpose(Gtk.InputPurpose.EMAIL)
         grid.attach(label, 1, 7, 1, 1)
@@ -350,7 +350,7 @@ class UiNewUser(Gtk.Window):
 
         # Telefone
         label = Gtk.Label(halign="start")
-        label.set_markup("Telefone:<span color='red'>*</span>")
+        label.set_markup("<span font='bold'>Telefone:</span><span color='red'>*</span>")
         self.phone = Gtk.Entry(max_length=20)
         self.phone.set_input_purpose(Gtk.InputPurpose.PHONE)
         grid.attach(label, 2, 7, 1, 1)
@@ -358,7 +358,7 @@ class UiNewUser(Gtk.Window):
 
         # Aniversário
         label = Gtk.Label(halign="start")
-        label.set_markup("Aniversário:<span color='red'>*</span>")
+        label.set_markup("<span font='bold'>Aniversário:</span><span color='red'>*</span>")
         self.birthday = Gtk.Entry(max_length=10)
         grid.attach(label, 3, 7, 1, 1)
         grid.attach(self.birthday, 3, 8, 1, 1)

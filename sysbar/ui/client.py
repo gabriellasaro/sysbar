@@ -343,14 +343,14 @@ class UiNewCustomer(Gtk.Window):
 
         # Nome
         label = Gtk.Label(halign="start")
-        label.set_markup("Nome completo:<span color='red'>*</span>")
+        label.set_markup("<span font='bold'>Nome completo:</span><span color='red'>*</span>")
         self.name = Gtk.Entry(max_length=120)
         grid.attach(label, 1, 2, 3, 1)
         grid.attach(self.name, 1, 3, 3, 1)
 
         # Telefone
         label = Gtk.Label(halign="start")
-        label.set_markup("Telefone:<span color='red'>*</span>")
+        label.set_markup("<span font='bold'>Telefone:</span><span color='red'>*</span>")
         self.phone = Gtk.Entry(max_length=12)
         self.phone.set_input_purpose(Gtk.InputPurpose.PHONE)
         grid.attach(label, 1, 4, 1, 1)
@@ -358,21 +358,21 @@ class UiNewCustomer(Gtk.Window):
 
         # PIN
         label = Gtk.Label(halign="start")
-        label.set_markup("PIN:<span color='red'>*</span> (4 números)")
+        label.set_markup("<span font='bold'>PIN:</span><span color='red'>*</span> (4 números)")
         self.pin = Gtk.Entry(max_length=4)
         grid.attach(label, 2, 4, 1, 1)
         grid.attach(self.pin, 2, 5, 1, 1)
 
         # Aniversário
         label = Gtk.Label(halign="start")
-        label.set_label("Aniversário:")
+        label.set_markup("<span font='bold'>Aniversário:</span>")
         self.birthday = Gtk.Entry(max_length=10)
         grid.attach(label, 3, 4, 1, 1)
         grid.attach(self.birthday, 3, 5, 1, 1)
 
         # Info
         label = Gtk.Label(margin_top=10)
-        label.set_markup("No campo telefone insira somente números, sempre com o DDD incluso.")
+        label.set_markup("<span font='bold' color='#c6262e'>No campo telefone insira somente números, sempre com o DDD incluso.</span>")
         grid.attach(label, 1, 6, 3, 1)
         
         # Separator

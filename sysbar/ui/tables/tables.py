@@ -157,7 +157,7 @@ class UiNewTable(Gtk.Window):
 
         # Capacidade
         label = Gtk.Label(halign="start")
-        label.set_markup("<span font='bold'>Capacidade:</span> <span color='#3689e6'>(pessoas)</span>")
+        label.set_markup("<span font='bold'>Capacidade:</span> (pessoas)")
         self.capacity = Gtk.Entry(max_length=6)
         self.capacity.set_text("4")
         grid.attach(label, 1, 6, 1, 1)

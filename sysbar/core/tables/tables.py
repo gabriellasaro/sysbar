@@ -58,8 +58,9 @@ VALUES (?, ?, ?, ?, ?)""", (self.tableId, args[0], args[1], datetime.now(), date
             return {'rStatus':0}
     
     def update_table(self, args):
-        if self.search_table(args[0]):
-            return {'rStatus':4}
+        if args[0]!=str(self.tableId):
+            if self.search_table(args[0]):
+                return {'rStatus':4}
         
         try:
             self.cursor.execute("""UPDATE sb_tables SET ID_table = ?, table_price = ?, table_capacity = ?, last_change = ? WHERE ID_table = ?""", (args[0], args[1], args[2], datetime.now(), self.tableId))
