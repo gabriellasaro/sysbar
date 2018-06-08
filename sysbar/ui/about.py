@@ -25,7 +25,7 @@ class AboutSystem():
         about.set_logo(pix)
         about.set_program_name("SysBar")
         about.set_version("0.1")
-        about.set_website("https://sysbar.info/")
+        about.set_website("https://www.sysbar.com.br/")
         about.set_website_label("SysBar Delivery")
         about.set_comments("Sistema de gerenciamento de bares e lanchonetes.")
         about.set_authors(["Gabriel Lasaro", "Samuel Tessaro"])

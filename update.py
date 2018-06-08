@@ -18,7 +18,7 @@ from gi.repository import Gtk
 import requests, json
 from sysbar.ui.update import UiUpdate
 
-request = requests.get("https://www.sysbar.info/version.json")
+request = requests.get("https://www.sysbar.com.br/version.json")
 if request.status_code==200:
     data = request.json()
     if data['version']>"0.1":
