@@ -508,13 +508,15 @@ class UiNextS4(Gtk.Window):
         self.special.set_active(False)
         grid.attach(self.special, 3, 5, 1, 1)
 
-        label = Gtk.Label(halign="start")
-        label.set_markup("<span font='bold'>Pedido Especial:</span>\rautoriza ao cliente, solicitar\ra remoção de ingredientes.")
-        grid.attach(label, 3, 6, 1, 2)
+        # Imprimir pedidos
+        self.printer = Gtk.CheckButton()
+        self.printer.set_label("Imprimir pedidos")
+        self.printer.set_active(False)
+        grid.attach(self.printer, 3, 6, 1, 1)
         
         # Seperator
         separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
-        grid.attach(separator, 3, 8, 1, 1)
+        grid.attach(separator, 3, 7, 1, 1)
 
         # Categoria
         rData = SbCategory().get_categories()        
@@ -527,19 +529,19 @@ class UiNextS4(Gtk.Window):
         self.category.set_active_id("0")
         label = Gtk.Label(halign="start")
         label.set_markup("<span font='bold'>Categoria:</span><span color='red'>*</span>")
-        grid.attach(label, 3, 9, 1, 1)
-        grid.attach(self.category, 3, 10, 1, 1)
+        grid.attach(label, 3, 8, 1, 1)
+        grid.attach(self.category, 3, 9, 1, 1)
 
         separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL, margin_top=10, margin_bottom=10)
         grid.attach(separator, 1, 11, 3, 1)
 
         label = Gtk.Label()
-        label.set_markup("<span color='#c6262e' font='bold'>Depois desta estapa não é possível voltar. O produto será salvo.</span>")
+        label.set_markup("<span font='bold'>Pedido Especial:</span> autoriza ao cliente, solicitar a remoção de ingredientes.")
         grid.attach(label, 1, 12, 3, 1)
-
+        
         separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL, margin_top=10, margin_bottom=10)
         grid.attach(separator, 1, 13, 3, 1)
-
+        
         button = Gtk.Button(height_request=40)
         if not update:
             button.set_label("Salvar")
@@ -552,6 +554,14 @@ class UiNextS4(Gtk.Window):
             button.connect("clicked", self.update, data[0])
             self.set_data(data)
         grid.attach(button, 3, 14, 1, 1)
+        
+        if not update:
+            separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL, margin_top=10, margin_bottom=10)
+            grid.attach(separator, 1, 15, 3, 1)
+            
+            label = Gtk.Label()
+            label.set_markup("<span color='#c6262e' font='bold'>Depois desta estapa não é possível voltar. O produto será salvo.</span>")
+            grid.attach(label, 1, 16, 3, 1)
     
     def next_step(self, widget, data):
         unity = self.unity.get_active_id()
@@ -570,10 +580,11 @@ class UiNextS4(Gtk.Window):
         cvirtual = self.cvirtual.get_active()
         delivery = self.delivery.get_active()
         special = self.special.get_active()
+        printer = self.printer.get_active()
         self.destroy()
         # Enviar informações
         submit = SbNewProduct()
-        result = submit.insert_meta_product([category, cvirtual, special, delivery, unity, amount, people])
+        result = submit.insert_meta_product([category, cvirtual, special, delivery, unity, amount, people, printer])
         if result[0]:
             if not submit.insert_product([data['data']['code'], data['data']['name'], data['data']['description'], data['data']['ingre'], data['data']['price'], data['data']['costPrice'], data['data']['stock']]):
                 submit.delete_meta_product()
@@ -600,11 +611,12 @@ class UiNextS4(Gtk.Window):
         cvirtual = self.cvirtual.get_active()
         delivery = self.delivery.get_active()
         special = self.special.get_active()
+        printer = self.printer.get_active()
         self.destroy()
 
         submit = SbUpdateProduct()
         submit.set_product_id(idProduct)
-        if not submit.update_technical_information([category, cvirtual, special, delivery, unity, amount, people]):
+        if not submit.update_technical_information([category, cvirtual, special, delivery, unity, amount, people, printer]):
             return UiDialog("Erro ao enviar dados!", "Não foi possível enviar as informações para a base de dados.")
         
     def come_back(self, widget, data):
@@ -646,7 +658,8 @@ class UiNextS4(Gtk.Window):
         self.cvirtual.set_active(bool(data[4]))
         self.delivery.set_active(bool(data[5]))
         self.special.set_active(bool(data[6]))
-        self.category.set_active_id(str(data[7]))
+        self.printer.set_active(bool(data[7]))
+        self.category.set_active_id(str(data[8]))
 
 class UiDiscount(Gtk.Window):
 

@@ -312,7 +312,7 @@ class UiSupport(Gtk.Window):
         label.set_label("Se precissar de ajuda não deixe de entrar em contato, estamos a disposição!")
         grid.attach(label, 1, 3, 1, 1)
 
-        label = Gtk.LinkButton("https://www.sysbar.info/#cont", "Acessar www.sysbar.info")
+        label = Gtk.LinkButton("https://www.sysbar.com.br/#cont", "Acessar www.sysbar.com.br")
         grid.attach(label, 1, 4, 1, 1)
 
         label = Gtk.LinkButton("http://api.whatsapp.com/send?phone=552737434062", "Whatsapp: (27) 37434062")

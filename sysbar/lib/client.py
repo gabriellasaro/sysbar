@@ -51,6 +51,13 @@ class SbClient():
             return {'rStatus':0}
         return {'rStatus':1, 'data':result[0]}
 
+    def get_customer_phone_by_id(self, customerId):
+        self.cursor.execute("SELECT client_phone FROM sb_client WHERE ID_client='{}' LIMIT 1".format(customerId))
+        result = self.cursor.fetchone()
+        if not result:
+            return {'rStatus':0}
+        return {'rStatus':1, 'data':result[0]}
+    
     def get_customer_address(self):
         self.cursor.execute("SELECT ID_address, cep, house_number, street, complement, district, city, state, comment, usage FROM sb_delivery_address WHERE ID_client='{}'".format(self.clientId))
         result = self.cursor.fetchall()

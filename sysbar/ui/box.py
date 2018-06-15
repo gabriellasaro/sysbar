@@ -16,15 +16,21 @@ from time import sleep
 
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import GLib, Gtk, Gdk, Pango
+gi.require_version('Gst', '1.0')
+from gi.repository import GLib, Gtk, Gdk, Pango, Gst
+Gst.init(None)
 from gi.repository.GdkPixbuf import Pixbuf
 from sysbar.lib.session import SbSession, SbLogout
 from sysbar.lib.client import SbClient
+from sysbar.core.shopping.orders import SbOrders
 from sysbar.ui.about import AboutSystem
 from sysbar.ui.tables.tables import UiTableList
 from sysbar.ui.admin import UiAdmin
 from sysbar.ui.client import UiCustomerList, UiNewCustomer, UiCustomerInfo
 # from sysbar.ui.comanda import UiBuy
+from sysbar.ui.shopping.orders import UiInfoOrder
+from sysbar.core.tools.date import SbDateFormat
+from sysbar.core.tools.printer import SbPrinterComanda
 class UiBox(Gtk.Window):
 
     # def __init__(self):
@@ -230,14 +236,14 @@ class UiBox(Gtk.Window):
         grid.attach(button, 1, 4, 1, 1)
 
         # Lista
-        # ID - PHONE - NAME - CREDIT
-        self.liststore = Gtk.ListStore(int, str, str, float)
+        # ID ORDER - ID COMANDA - ID TABLE - NAME CUSTOMER - NAME PRODUCT - AMOUNT PRODUCT - COMMENT - REGISTER ORDER
+        self.liststore = Gtk.ListStore(int, int, int, str, str, int, str, str)
         treeview = Gtk.TreeView()
         treeview.set_model(self.liststore)
         treeview.set_search_column(2)
         treeview.set_vexpand(True)
         treeview.set_hexpand(True)
-        # treeview.connect("row-activated", self.on_row_activated)
+        treeview.connect("row-activated", self.show_order)
 
         scrolledwindow = Gtk.ScrolledWindow()
         scrolledwindow.add(treeview)
@@ -245,32 +251,60 @@ class UiBox(Gtk.Window):
 
         cellrenderertext = Gtk.CellRendererText()
         
-        treeviewcolumn = Gtk.TreeViewColumn("ID")
-        treeviewcolumn.set_spacing(10)
-        treeviewcolumn.set_resizable(True)
-        treeviewcolumn.pack_start(cellrenderertext, False)
-        treeviewcolumn.add_attribute(cellrenderertext, "text", 0)
-        treeview.append_column(treeviewcolumn)
+        # treeviewcolumn = Gtk.TreeViewColumn("ID ORDEM")
+        # treeviewcolumn.set_spacing(10)
+        # treeviewcolumn.set_resizable(True)
+        # treeviewcolumn.pack_start(cellrenderertext, False)
+        # treeviewcolumn.add_attribute(cellrenderertext, "text", 0)
+        # treeview.append_column(treeviewcolumn)
 
-        treeviewcolumn = Gtk.TreeViewColumn("Telefone")
-        treeviewcolumn.set_spacing(10)
-        treeviewcolumn.set_resizable(True)
-        treeviewcolumn.pack_start(cellrenderertext, False)
-        treeviewcolumn.add_attribute(cellrenderertext, "text", 1)
-        treeview.append_column(treeviewcolumn)
+        # treeviewcolumn = Gtk.TreeViewColumn("ID COMANDA")
+        # treeviewcolumn.set_spacing(10)
+        # treeviewcolumn.set_resizable(True)
+        # treeviewcolumn.pack_start(cellrenderertext, False)
+        # treeviewcolumn.add_attribute(cellrenderertext, "text", 1)
+        # treeview.append_column(treeviewcolumn)
 
-        treeviewcolumn = Gtk.TreeViewColumn("Nome")
+        treeviewcolumn = Gtk.TreeViewColumn("N. MESA")
         treeviewcolumn.set_spacing(10)
         treeviewcolumn.set_resizable(True)
         treeviewcolumn.pack_start(cellrenderertext, False)
         treeviewcolumn.add_attribute(cellrenderertext, "text", 2)
         treeview.append_column(treeviewcolumn)
 
-        treeviewcolumn = Gtk.TreeViewColumn("Crédito")
+        treeviewcolumn = Gtk.TreeViewColumn("NOME DO PRODUTO")
+        treeviewcolumn.set_spacing(10)
+        treeviewcolumn.set_resizable(True)
+        treeviewcolumn.pack_start(cellrenderertext, False)
+        treeviewcolumn.add_attribute(cellrenderertext, "text", 4)
+        treeview.append_column(treeviewcolumn)
+
+        treeviewcolumn = Gtk.TreeViewColumn("QUANTIDADE")
+        treeviewcolumn.set_spacing(10)
+        treeviewcolumn.set_resizable(True)
+        treeviewcolumn.pack_start(cellrenderertext, False)
+        treeviewcolumn.add_attribute(cellrenderertext, "text", 5)
+        treeview.append_column(treeviewcolumn)
+
+        treeviewcolumn = Gtk.TreeViewColumn("COMENTÁRIO")
+        treeviewcolumn.set_spacing(10)
+        treeviewcolumn.set_resizable(True)
+        treeviewcolumn.pack_start(cellrenderertext, False)
+        treeviewcolumn.add_attribute(cellrenderertext, "text", 6)
+        treeview.append_column(treeviewcolumn)
+
+        treeviewcolumn = Gtk.TreeViewColumn("NOME DO CLIETE")
         treeviewcolumn.set_spacing(10)
         treeviewcolumn.set_resizable(True)
         treeviewcolumn.pack_start(cellrenderertext, False)
         treeviewcolumn.add_attribute(cellrenderertext, "text", 3)
+        treeview.append_column(treeviewcolumn)
+
+        treeviewcolumn = Gtk.TreeViewColumn("DATA DO PEDIDO")
+        treeviewcolumn.set_spacing(10)
+        treeviewcolumn.set_resizable(True)
+        treeviewcolumn.pack_start(cellrenderertext, False)
+        treeviewcolumn.add_attribute(cellrenderertext, "text", 7)
         treeview.append_column(treeviewcolumn)
 
         # Informações da sessão
@@ -289,18 +323,34 @@ class UiBox(Gtk.Window):
     def start_update(self):
         while True:
             GLib.idle_add(self.update_list)
-            sleep(10)
+            sleep(20)
     
     def update_list(self):
+        # ID ORDER - ID COMANDA - ID TABLE - NAME CUSTOMER - NAME PRODUCT - AMOUNT PRODUCT - COMMENT - REGISTER ORDER
+        result = SbOrders().get_orders_list()
         # self.liststore.clear()
-        # ID - PHONE - NAME - CREDIT
-        data = SbClient()
-        rData = data.get_customer_list()
-        if rData['rStatus']==1:
-            for client in rData['data']:
-                self.liststore.append([client[0], client[1], client[2], client[3]])
+        if result['rStatus']==1:
+            # pipeline = "filesrc location=audio/01.mp3 ! decodebin ! alsasink"
+            # self.player = Gst.parse_launch(pipeline)
+            # self.player.set_state(Gst.State.NULL)
+            # self.player.set_state(Gst.State.PLAYING)
+            for order in result['data'].values():
+                for item in order['items']:
+                    date = SbDateFormat(item['register'][:-7]).diff_passed_to_current()
+                    self.liststore.append([item['ID_order'], order['ID_comanda'], order['ID_table'], order['client_name'], item['name'], item['amount'], item['comment'], date])
+            
+            for order in result['data'].values():
+                del order['items']
+                if len(order['printer'])>=1:
+                    # print("Printer: {}".format(order))
+                    pass
+                    # SbPrinterComanda(order)
     
     # Abrir janelas
+    def show_order(self, widget, treepath, text):
+        win = UiInfoOrder(self.liststore[treepath][0])
+        win.show_all()
+    
     def on_event1(self, widget):
         print("Abrir comanda.")
         win = UiBuy()

@@ -108,7 +108,7 @@ class UiCustomerList(Gtk.Window):
 
 class UiCustomerInfo(Gtk.Window):
 
-    def __init__(self, customerPhone):
+    def __init__(self, customerPhone, cId=False):
         Gtk.Window.__init__(self, title="Informações do cliente", window_position="center")
         grid = Gtk.Grid(margin=20)
         grid.set_row_spacing(10)
@@ -116,7 +116,24 @@ class UiCustomerInfo(Gtk.Window):
         self.add(grid)
 
         client = SbClient()
-        dataClient = client.get_customer_information(customerPhone)
+        if cId:
+            result = client.get_customer_phone_by_id(customerPhone)
+            if result['rStatus']==1:
+                dataClient = client.get_customer_information(result['data'])
+            else:
+                self.set_resizable(False)
+                
+                label = Gtk.Label()
+                label.set_markup("<span size='20000' color='red'>Não encontramos o cliente!</span>")
+                grid.attach(label, 1, 1, 1, 1)
+                
+                button = Gtk.Button(margin_top=10, width_request=100, height_request=40, halign="end")
+                button.set_label("Fechar")
+                button.connect("clicked", self.destroy_window)
+                grid.attach(button, 1, 2, 1, 1)
+        else:
+            dataClient = client.get_customer_information(customerPhone)
+        
         if dataClient['rStatus']==0:
             self.set_resizable(False)
 
@@ -280,7 +297,10 @@ class UiCustomerInfo(Gtk.Window):
 
             button = Gtk.Button()
             button.set_label("Atualizar")
-            button.connect("clicked", self.update_window, customerPhone)
+            if cId:
+                button.connect("clicked", self.update_window, customerPhone, True)
+            else:
+                button.connect("clicked", self.update_window, customerPhone)
             grid.attach(button, 6, 9, 1, 1)
 
             button = Gtk.Button()
@@ -318,9 +338,9 @@ class UiCustomerInfo(Gtk.Window):
         win = UiChangePhone(clientId, number)
         win.show_all()
     
-    def update_window(self, widget, phone):
+    def update_window(self, widget, phone, cId=False):
         self.destroy()
-        win = UiCustomerInfo(phone)
+        win = UiCustomerInfo(phone, cId)
         win.show_all()
     
     def destroy_window(self, widget):

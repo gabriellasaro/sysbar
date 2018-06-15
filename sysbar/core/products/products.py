@@ -57,6 +57,7 @@ class SbProducts():
                 'unity':result[18],
                 'amount':result[19],
                 'peopleServed':result[20],
+                'printer':result[21],
                 'category':result[22],
                 'idCategory':result[14]
             }

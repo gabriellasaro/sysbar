@@ -313,11 +313,11 @@ class UiInfoProduct(Gtk.Window):
             label.set_markup("<span font='bold'>Desconto:</span> <span color='red'>Desativado</span>")
         else:
             if free['type']=="percent":
-                label.set_markup("<span font='bold'>Desconto:</span> <span color='blue'>A cada {} produto(s) o cliente ganha {}% de desconto.</span>".format(free['quant'], free['free']))
+                label.set_markup("<span font='bold'>Desconto:</span> <span color='blue'>A partir de {} produto(s) o cliente ganha {}% de desconto.</span>".format(free['quant'], free['free']))
             elif free['type']=="money":
-                label.set_markup("<span font='bold'>Desconto:</span> <span color='blue'>A cada {} produto(s) o cliente ganha R$ {} de desconto.</span>".format(free['quant'], free['free']))
+                label.set_markup("<span font='bold'>Desconto:</span> <span color='blue'>A partir de {} produto(s) o cliente ganha R$ {} de desconto.</span>".format(free['quant'], str(free['free']).replace(".", ",")))
             else:
-                label.set_markup("<span font='bold'>Desconto:</span> <span color='blue'>A cada {} produto(s) o cliente ganha {} unidade(s) de desconto.</span>".format(free['quant'], free['free']))
+                label.set_markup("<span font='bold'>Desconto:</span> <span color='blue'>A partir de {} produto(s) o cliente ganha {} unidade(s) de desconto.</span>".format(free['quant'], free['free']))
         grid.attach(label, 4, 13, 2, 1)
 
         separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
@@ -348,7 +348,7 @@ class UiInfoProduct(Gtk.Window):
         grid.attach(button, 5, 17, 1, 1)
 
         button = Gtk.Button(label="Alterar informações tecnicas", height_request=40)
-        button.connect("clicked", self.update_technical_information, [data['data']['id'], data['data']['unity'], data['data']['amount'], data['data']['peopleServed'], data['data']['virtualMenu'], data['data']['delivery'], data['data']['specialRequest'], data['data']['idCategory']])
+        button.connect("clicked", self.update_technical_information, [data['data']['id'], data['data']['unity'], data['data']['amount'], data['data']['peopleServed'], data['data']['virtualMenu'], data['data']['delivery'], data['data']['specialRequest'], data['data']['printer'], data['data']['idCategory']])
         grid.attach(button, 4, 18, 2, 1)
 
         button = Gtk.Button(label="Atualizar", height_request=40)

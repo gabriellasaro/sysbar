@@ -54,8 +54,8 @@ class SbNewProduct(SbBNUProduct):
     def insert_meta_product(self, args):
         self.generate_product_id()
         try:
-            self.cursor.execute("""INSERT INTO sb_meta_product (ID_product, ID_category, virtual_menu, special_request, delivery, unity, amount, people_served) 
-VALUES (?, ?, ?, ?, ?, ?, ?, ?)""", (self.idProduct, args[0], args[1], args[2], args[3], args[4], args[5], args[6]))
+            self.cursor.execute("""INSERT INTO sb_meta_product (ID_product, ID_category, virtual_menu, special_request, delivery, unity, amount, people_served, printer) 
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""", (self.idProduct, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]))
             self.conn.commit()
             return [True, self.idProduct]
         except:
@@ -116,7 +116,7 @@ class SbUpdateProduct(SbBNUProduct):
 
     def update_technical_information(self, args):
         try:
-            self.cursor.execute("""UPDATE sb_meta_product SET ID_category = ?, virtual_menu = ?, special_request = ?, delivery = ?, unity = ?, amount = ?, people_served = ? WHERE ID_product = ?""", (args[0], args[1], args[2], args[3], args[4], args[5], args[6], self.idProduct))
+            self.cursor.execute("""UPDATE sb_meta_product SET ID_category = ?, virtual_menu = ?, special_request = ?, delivery = ?, unity = ?, amount = ?, people_served = ?, printer = ? WHERE ID_product = ?""", (args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], self.idProduct))
             self.conn.commit()
 
             self.cursor.execute("""UPDATE sb_product SET last_change = ? WHERE ID_product = ?""", (datetime.now(), self.idProduct))
