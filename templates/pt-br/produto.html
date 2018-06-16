@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <!--Título sugerido-->
+    <title>{{ data['data']['name'] }} - SysBar</title>
+
+    <!--Jquery-->
+    <script src="{{ url_for('static', filename='v1/js/jquery-3.2.1.min.js') }}"></script>
+
+    <!--Materialize-->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='v1/css/materialize.min.css') }}"  media="screen,projection"/>
+    <script type="text/javascript" src="{{ url_for('static', filename='v1/js/materialize.min.js') }}"></script>
+
+    <!--Ícones-->
+    <link href="{{ url_for('static', filename='v1/icons/google/material/iconfont/material-icons.css') }}" rel="stylesheet">
+
+    <!--Otimizado para mobile-->
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+
+    <!--Meu CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='v1/css/image.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v1/css/cardapio.css') }}">
+
+    <!--Init-->
+    <script src="{{ url_for('static', filename='v1/js/nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/autoc.js') }}"></script>
+
+    <!-- SysBar js -->
+    <script src="{{ url_for('static', filename='v1/sysbar-js/cookie.js') }}"></script>
+  </head>
+  <body>
+    <div class="fixed-action-btn click-to-toggle">
+      <a class="btn-floating btn-large waves-effect waves-light red pulsee">
+        <!-- pulsee é pulse -->
+        <i class="large material-icons">shopping_cart</i>
+      </a>
+    <ul>
+      <li><a href="{{ url_for('carrinho') }}" class="btn-floating waves-effect waves-light red"><i class="material-icons">remove_shopping_cart</i></a></li>
+
+      <!--Leitura de qr code-->
+      <!-- <li><a href="grupo.html" class="btn-floating waves-effect waves-light red"><i class="material-icons">group_add</i></a></li> -->
+
+      <!-- <li><a href="carrinho.html" class="btn-floating waves-effect waves-light red"><i class="material-icons">insert_chart</i></a></li> -->
+    </ul>
+  </div>
+    <header>
+      <nav>
+        <div class="nav-wrapper red darken-4">
+          <a href="{{ url_for('category') }}?c={{ cId }}&name={{ category }}" class="brand-logo">SysBar</a>
+          <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a href="{{ url_for('profile') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+          <ul class="side-nav" id="mobile-demo">
+            <li><a href="{{ url_for('profile') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <div class="produto_info">
+      <br>
+      <h3 class="center-align">{{ data['data']['name'] }}</h3>
+      <br>
+      <div class="preco-produto">
+        <h3 class="center-align green-text light-green-text accent-4-text"><b>R$ {{ data['data']['price'] }}</b></h3>
+        {% if data['data']['discount']['free']>'0' %}
+          {% if data['data']['discount']['type'] == 'percent' %}
+          <h5 class="center-align blue-text">A partir de {{ data['data']['discount']['quant'] }} unidades você tem {{ data['data']['discount']['free'] }}% de desconto.</b></h5>
+          {% elif data['data']['discount']['type'] == 'money' %}
+          <h5 class="center-align blue-text">A partir de {{ data['data']['discount']['quant'] }} unidades você tem R$ {{ data['data']['discount']['free'] }} de desconto.</b></h5>
+          {% else %}
+          <h5 class="center-align blue-text darken-4-text">A partir de {{ data['data']['discount']['quant'] }} unidades você tem {{ data['data']['discount']['free'] }} unidades de desconto.</h5>
+          {% endif %}
+        {% endif %}
+
+        <p class="center-align">{{ data['data']['description']}}</p><hr style="width:60px;border:1px solid #9999">
+        <p class="center-align">{{ data['data']['ingre']}}</p>
+        <br>
+      </div>
+      <div class="info_adicional center-align">
+        <ul>
+          {% if data['data']['peopleServed']==1 %}
+          <li><i class="medium material-icons">people</i><h4>{{ data['data']['peopleServed'] }} pessoa</h4></li><br>
+          {% elif data['data']['peopleServed']>1 %}
+          <li><i class="medium material-icons">people</i><h4>{{ data['data']['peopleServed'] }} pessoas</h4></li><br>
+          {% endif %}
+          {% if 'G' == data['data']['unity'] %}
+          <li><i class="medium material-icons">restaurant</i><h4>Grande</h4></li><br>
+          {% elif 'M' == data['data']['unity'] %}
+          <li><i class="medium material-icons">restaurant</i><h4>Médio</h4></li><br>
+          {% elif 'P' == data['data']['unity'] %}
+          <li><i class="medium material-icons">restaurant</i><h4>Pequeno</h4></li><br>
+          {% else %}
+            {% if data['data']['amount'][-2:]==',0' %}
+            <li><i class="medium material-icons">restaurant</i><h4>{{ data['data']['amount'][:-2]}}{{ data['data']['unity'] }}</h4></li><br>
+            {% else %}
+            <li><i class="medium material-icons">restaurant</i><h4>{{ data['data']['amount']}}{{ data['data']['unity'] }}</h4></li><br>
+            {% endif %}
+          {% endif %}
+        </ul>
+      </div>
+      <div class="buy center-align">
+        <span>
+          <br><br>
+          <a class="btn-floating btn-large waves-effect waves-light red lighten-1" href="{{ url_for('category') }}?c={{ cId }}&name={{ category }}"><i class="material-icons">arrow_back</i></a><br><br><br>
+          <a class="waves-effect waves-light btn red lighten-1" onClick="save_product([{{ data['data']['id']}}, 0]);"><i class="material-icons">person</i>Para mim</a><br><br>
+          <a class="waves-effect waves-light btn red lighten-1" onClick="save_product([{{ data['data']['id']}}, 1]);"><i class="material-icons">group</i>Para todos (mesa)</a><br><br>
+        </span>
+      </div>
+    </div>
+
+  </body>
+</html>

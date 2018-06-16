@@ -14,8 +14,9 @@
 # limitations under the License.
 from flask import Flask, request, render_template, url_for, make_response, redirect
 from sysbar.lib.client import SbWClient
-from sysbar.lib.tables import SbTables
-from sysbar.lib.products import SbWProducts
+from sysbar.core.tables.tables import SbTables
+from sysbar.core.products.products import SbWProducts
+from sysbar.core.products.category import SbCategory
 import json
 app = Flask(__name__)
 
@@ -26,9 +27,23 @@ def index():
         return redirect(url_for('table'))
     if not request.cookies.get('client_phone'):
         return redirect(url_for('login'))
-    # result = SbWProducts()
-    # print(result.get_products())
-    return render_template('pt-br/index.html'), 200
+    data = SbCategory().get_categories()
+    return render_template('pt-br/index.html', data=data), 200
+
+@app.route("/category/", methods=['GET'])
+def category():
+    cId = request.args.get('c')
+    name = request.args.get('name')
+    result = SbWProducts().get_products_for_category(cId)
+    return render_template('pt-br/menu.html', category=name, cId=cId, data=result), 200
+
+@app.route("/product/", methods=['GET'])
+def product():
+    pId = request.args.get('p')
+    name = request.args.get('category')
+    cId = request.args.get('c')
+    result = SbWProducts(pId).get_product_simple_info()
+    return render_template("pt-br/produto.html", category=name, cId=cId, data=result), 200
 
 @app.route("/profile/")
 def profile():
@@ -100,6 +115,7 @@ def api_login():
     table = request.cookies.get('client_table')
     if not phone or not pin or not table:
         return json.dumps({'rStatus':11}), 200, {"Content-Type": "application/json"}
+    print("{}- {} - {}".format(phone, pin, table))
     login = SbWClient()
     result = login.login(phone, pin, table)
     if result['rStatus']==1:

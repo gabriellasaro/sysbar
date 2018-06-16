@@ -7,48 +7,44 @@
     <title>Carrinho - SysBar</title>
 
     <!--Jquery-->
-    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/jquery-3.2.1.min.js') }}"></script>
 
     <!--Materialize-->
-    <script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='v1/css/materialize.min.css') }}"  media="screen,projection"/>
+    <script type="text/javascript" src="{{ url_for('static', filename='v1/js/materialize.min.js') }}"></script>
 
     <!--Ícones-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='icons/google/material/iconfont/material-icons.css') }}">
+    <link href="{{ url_for('static', filename='v1/icons/google/material/iconfont/material-icons.css') }}" rel="stylesheet">
 
     <!--Otimizado para mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
     <!--Meu CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/image.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/mesa.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/niveis.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/paraimg.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v1/css/image.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v1/css/niveis.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v1/css/cores.css') }}">
 
     <!--Init-->
-    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/niver.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/select.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/autoc.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/niver.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/select.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/autoc.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/chart.min.js') }}"></script>
   </head>
   <body>
     <header>
       <nav>
         <div class="nav-wrapper red darken-4">
-          <a href="{{ url_for('index') }}" class="brand-logo">Pão&#38;Cia</a>
+          <a href="{{ url_for('index') }}" class="brand-logo">SysBar</a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
             <li><a href="{{ url_for('profile') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
             <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
-            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
             <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
           </ul>
           <ul class="side-nav" id="mobile-demo">
             <li><a href="{{ url_for('profile') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
             <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
-            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
             <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
           </ul>
         </div>
@@ -66,41 +62,82 @@
           <thead>
             <tr>
               <th>Nome</th>
+              <th></th>
               <th>Quantidade</th>
               <th>Total gasto</th>
-              <th>Status</th>
             </tr>
           </thead>
 
           <tbody>
             <tr>
-              <td>Pão Francês</td>
-              <td>3 Kg</td>
+              <td>Pão Francês (kg)</td>
+              <td><i class="material-icons">highlight_off</i></td>
+              <td>
+                <div class="input-field inline">
+                  <input id="qntd" type="number" class="validate" value="1">
+                  <label for="qntd" data-error="Tem algo de errado." data-success=""></label>
+                </div>
+              </td>
               <td>R$36,00</td>
-              <td><span class="new badge black" data-badge-caption="">Cancelado</span></td>
             </tr>
             <tr>
-              <td>Pão doce</td>
-              <td>1 Kg</td>
+              <td colspan="5">
+                <input placeholder="Ex: Não quero alface no lanche." id="comentario_product" type="text" class="validate">
+              </td>
+            </tr>
+            <tr>
+              <td>Pão doce (kg)</td>
+              <td><i class="material-icons">highlight_off</i></td>
+              <td>
+                <div class="input-field inline">
+                  <input id="qntd" type="number" class="validate" value="5">
+                  <label for="qntd" data-error="Tem algo de errado." data-success=""></label>
+                </div>
+              </td>
               <td>R$10,00</td>
-              <td><span class="new badge red" data-badge-caption="">Pendente</span></td>
             </tr>
             <tr>
-              <td>Pão de queijo</td>
-              <td>0,5 Kg</td>
+              <td colspan="5">
+                <input placeholder="Ex: Não quero alface no lanche." id="comentario_product" type="text" class="validate">
+              </td>
+            </tr>
+            <tr>
+              <td>Pão de queijo (kg)</td>
+              <td><i class="material-icons">highlight_off</i></td>
+              <td>
+                <div class="input-field inline">
+                  <input id="qntd" type="number" class="validate" value="1">
+                  <label for="qntd" data-error="Tem algo de errado." data-success=""></label>
+                </div>
+              </td>
               <td>R$6,00</td>
-              <td><span class="new badge yellow darken-3" data-badge-caption="">Preparando</span></td>
+            </tr>
+            <tr>
+              <td colspan="5">
+                <input placeholder="Ex: Não quero alface no lanche." id="comentario_product" type="text" class="validate">
+              </td>
             </tr>
             <tr>
               <td>Coca-cola 1L</td>
-              <td>2 L</td>
-              <td>R$1,00 *</td>
-              <td><span class="new badge green" data-badge-caption="">Entregue</span></td>
+              <td><i class="material-icons">highlight_off</i></td>
+              <td>
+                <div class="input-field inline">
+                  <input id="qntd" type="number" class="validate" value="1">
+                  <label for="qntd" data-error="Tem algo de errado." data-success=""></label>
+                </div>
+              </td>
+              <td>R$1,00</td>
+            </tr>
+            <tr>
+              <td colspan="5">
+                <input placeholder="Ex: Não quero alface no lanche." id="comentario_product" type="text" class="validate">
+              </td>
             </tr>
             <tr>
               <td>Total a pagar</td>
+              <td><i class="medium material-icons green_icone">local_atm</i></td>
               <td></td>
-              <td>R$17,00</td>
+              <td><span id="valor_total_carrinho">R$53,00</span></td>
               <td></td>
             </tr>
           </tbody>
@@ -108,7 +145,7 @@
 
         <div class="dividiu_asterisco">
           <p class="flow-text center-align">
-            * Compras divididas com outras pessoas
+            Certifique-se de escolher apenas os produtos corretos antes de finalizar a compra.
           </p>
         </div>
 

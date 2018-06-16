@@ -7,56 +7,51 @@
     <title>Sobre - SysBar</title>
 
     <!--Jquery-->
-    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/jquery-3.2.1.min.js') }}"></script>
 
     <!--Materialize-->
-    <script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='v1/css/materialize.min.css') }}"  media="screen,projection"/>
+    <script type="text/javascript" src="{{ url_for('static', filename='v1/js/materialize.min.js') }}"></script>
 
     <!--Ícones-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='icons/google/material/iconfont/material-icons.css') }}">
+    <link href="{{ url_for('static', filename='v1/icons/google/material/iconfont/material-icons.css') }}" rel="stylesheet">
 
     <!--Otimizado para mobile-->
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
     <!--Meu CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/image.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/mesa.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/niveis.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/paraimg.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v1/css/paraimg.css') }}">
 
     <!--Init-->
-    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/niver.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/select.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/autoc.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/paraimg.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/niver.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/select.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/autoc.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/paraimg.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/chart.min.js') }}"></script>
 
   </head>
   <body>
-
     <header>
       <nav>
         <div class="nav-wrapper red darken-4">
-          <a href="{{ url_for('index') }}" class="brand-logo">SysBar</a>
+          <a href="{{ url_for('index' ) }}" class="brand-logo">SysBar</a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
-            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
-            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
-            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+            <li><a href="{{ url_for('profile' ) }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index' ) }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho' ) }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('about' ) }}"><i class="material-icons left">description</i>Sobre</a></li>
           </ul>
           <ul class="side-nav" id="mobile-demo">
-            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
-            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
-            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+            <li><a href="{{ url_for('profile' ) }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="{{ url_for('index' ) }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="{{ url_for('carrinho' ) }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="{{ url_for('about' ) }}"><i class="material-icons left">description</i>Sobre</a></li>
           </ul>
         </div>
       </nav>
     </header>
-
-
     <div class="sobre flow-text center-align">
       <h4>
         Sobre
@@ -67,7 +62,7 @@
       <p class="">O SysBar foi desenvolvido com a finalidade de proporcionar uma melhor experiência, tanto para o consumidor, quanto para
         bares, restaurantes e lanchonetes que precisam atender seus clientes com praticidade e agilidade.
       </p>
-      <img class="responsive-img" src="{{ url_for('static', filename='img/sobre/mulher_celular2.jpg') }}">
+      <img class="responsive-img" src="{{ url_for('static', filename='v1/img/sobre/mulher_celular2.jpg') }}">
       <br><br>
 
       <h5>Adaptável</h5>
@@ -75,36 +70,37 @@
         Com um smartphone, tablet, ou notebook, o consumidor pode facilmente realizar suas compras com poucos cliques. É fácil, rápido e prático.
       </p>
 
-      <img class="imagem_celular1 col s12 m6" src="{{ url_for('static', filename='img/sobre/cel1.png') }}">
-      <img class="imagem_celular2 col s12 m6" src="{{ url_for('static', filename='img/sobre/cel2.png') }}">
+      <img class="imagem_celular1 col s12 m6" src="{{ url_for('static', filename='v1/img/sobre/cel1.png') }}">
+      <img class="imagem_celular2 col s12 m6" src="{{ url_for('static', filename='v1/img/sobre/cel2.png') }}">
       <br><br>
 
       <h5>Inovador</h5>
       <p>
-        Não há dúvidas de que a tecnologia avançou bastante no mundo moderno. As pessoas estão cada vez mais conectadas nos tablets e celulares.
-        Não perca chance
+        Não há dúvidas de que a tecnologia avançou bastante no mundo moderno. 
+        As pessoas estão cada vez mais conectadas nos tablets e celulares.
+        Não perca sua chance de inovar!
       </p>
-      <img class="coffe" src="{{ url_for('static', filename='img/sobre/coffe.jpg') }}">
+      <img class="coffe" src="{{ url_for('static', filename='v1/img/sobre/coffe.jpg') }}">
       <br><br>
-
-
       <h5>Preços flexíveis</h5>
       <p>
         Diferente de outros no mercado, nossos preços são flexíveis e vão de acordo com as preferência de nossos clientes.
       </p>
-      <img class="price" src="{{ url_for('static', filename='img/sobre/coin.jpg') }}">
-
-
+      <img class="price" src="{{ url_for('static', filename='v1/img/sobre/coin.jpg') }}">
     </div>
-
     <footer class="page-footer">
       <div class="container">
         <div class="row">
           <div class="col l6 s12">
-              <h5 class="white-text">Contatos</h5>
-              <ul>
-                <li>WhatsApp: (27) 37434062</li>
-              </ul>
+            <h5 class="white-text">Mais informações</h5>
+            <p class="grey-text text-lighten-4">Desenvolvido por Gabriel Lasaro e Samuel Tessaro
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Contatos</h5>
+            <ul>
+              <!-- <li><a class="grey-text text-lighten-3" href="#!">contato@sysbar.com.br</a></li> -->
+              <li><a class="grey-text text-lighten-3" href="http://api.whatsapp.com/send?phone=552737434062">(27) 37434062</a></li>
+            </ul>
           </div>
         </div>
       </div>
@@ -114,8 +110,5 @@
         </div>
       </div>
     </footer>
-
-
-
   </body>
 </html>

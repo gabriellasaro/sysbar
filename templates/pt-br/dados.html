@@ -7,31 +7,26 @@
     <title>Pão e Cia</title>
 
     <!--Jquery-->
-    <script src="js/{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
 
     <!--Materialize-->
-    <script src="js/{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-    <link type="text/css" rel="stylesheet" href="css/{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
 
     <!--Ícones-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='icons/google/material/iconfont/material-icons.css') }}">
+    <link href="icons/google/material/iconfont/material-icons.css" rel="stylesheet">
 
     <!--Otimizado para mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <!--Meu CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/image.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/mesa.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/niveis.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/paraimg.css') }}">
+    <link rel="stylesheet" href="css/image.css">
 
     <!--Init-->
-    <script src="js/{{ url_for('static', filename='js/nav.js') }}"></script>
-    <script src="js/{{ url_for('static', filename='js/niver.js') }}"></script>
-    <script src="js/{{ url_for('static', filename='js/select.js') }}"></script>
-    <script src="js/{{ url_for('static', filename='js/autoc.js') }}"></script>
-    <script src="js/{{ url_for('static', filename='js/chart.min.js') }}"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/niver.js"></script>
+    <script src="js/select.js"></script>
+    <script src="js/autoc.js"></script>
 
 
   </head>
@@ -40,23 +35,23 @@
     <header>
       <nav>
         <div class="nav-wrapper red darken-4">
-          <a href="{{ url_for('index') }}" class="brand-logo">Pão&#38;Cia</a>
+          <a href="index.html" class="brand-logo">Pão&#38;Cia</a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
-            <li><a href="{{ url_for('perfil') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
-            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
-            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
-            <li><a href="{{ url_for('chat') }}"><i class="material-icons left">question_answer</i>Chat</a></li>
-            <li><a href="{{ url_for('entrar') }}"><i class="material-icons left">build</i>Login|Cadastrar-se</a></li>
-            <li><a href="{{ url_for('sobre') }}"><i class="material-icons left">description</i>Sobre</a></li>
+            <li><a href="perfil.html"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="index.html"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="carrinho.html"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="chat.html"><i class="material-icons left">question_answer</i>Chat</a></li>
+            <li><a href="entrar.html"><i class="material-icons left">build</i>Login|Cadastrar-se</a></li>
+            <li><a href="sobre.html"><i class="material-icons left">description</i>Sobre</a></li>
           </ul>
           <ul class="side-nav" id="mobile-demo">
-            <li><a href="{{ url_for('perfil') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
-            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
-            <li><a href="{{ url_for('carrinho') }}"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
-            <li><a href="{{ url_for('chat') }}"><i class="material-icons">question_answer</i>Chat</a></li>
-            <li><a href="{{ url_for('entrar') }}"><i class="material-icons left">build</i>Login|Cadastrar-se</a></li>
-            <li><a href="{{ url_for('sobre') }}"><i class="material-icons left">description</i>Sobre</a></li>
+            <li><a href="perfil.html"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="index.html"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="carrinho.html"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="chat.html"><i class="material-icons">question_answer</i>Chat</a></li>
+            <li><a href="entrar.html"><i class="material-icons left">build</i>Login|Cadastrar-se</a></li>
+            <li><a href="sobre.html"><i class="material-icons left">description</i>Sobre</a></li>
           </ul>
         </div>
       </nav>

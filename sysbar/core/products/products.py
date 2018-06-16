@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import json
 from sysbar.core.db.connect import DBSysbar
 class SbProducts():
 
@@ -80,10 +81,49 @@ class SbWProducts():
         self.cursor = DBSysbar().conn(True)
         self.idProduct = idProduct
     
-    def get_products(self):
-        self.cursor.execute("""SELECT sb_product.ID_product, sb_product.product_name, sb_product.product_img, sb_product.product_description, sb_product.product_price, sb_product.product_stock, sb_product.stock_status,
-        sb_meta_product.unity, sb_meta_product.amount, sb_meta_product.people_served, sb_list_categories.category FROM sb_product INNER JOIN sb_meta_product ON sb_product.ID_product=sb_meta_product.ID_product INNER JOIN sb_list_categories ON sb_meta_product.ID_category=sb_list_categories.ID_category WHERE sb_meta_product.virtual_menu='1'""")
+    def get_products_for_category(self, categoryId):
+        self.cursor.execute("""SELECT sb_product.ID_product, sb_product.product_name, sb_product.product_description, sb_product.product_price, sb_product.product_stock, sb_product.stock_status,
+sb_meta_product.unity, sb_meta_product.amount FROM sb_product INNER JOIN sb_meta_product ON sb_product.ID_product=sb_meta_product.ID_product WHERE sb_meta_product.ID_category = {} AND sb_meta_product.virtual_menu='1'""".format(categoryId))
         result = self.cursor.fetchall()
         if not result:
             return {'rStatus':0}
-        return {'rStatus':1, 'data':result}
+        
+        items = {
+            'rStatus':1,
+            'data':[]
+        }
+        for x in result:
+            if x[5]==1 and x[4]<=0:
+                continue
+            items['data'].append({
+                'ID_product':x[0],
+                'name':x[1],
+                'description':x[2],
+                'price':str(x[3]).replace(".", ","),
+                'unity':x[6],
+                'amount':x[7]
+                })
+        return items
+
+    def get_product_simple_info(self):
+        self.cursor.execute("SELECT sb_product.*, sb_meta_product.unity, sb_meta_product.amount, sb_meta_product.people_served FROM sb_product INNER JOIN sb_meta_product ON sb_meta_product.ID_product=sb_product.ID_product WHERE sb_product.ID_product='{}' LIMIT 1".format(self.idProduct))
+        result = self.cursor.fetchone()
+        if not result:
+            return {'rStatus':0}
+        return {
+            'rStatus':1,
+            'data':{
+                'id':result[0],
+                'barcode':result[1],
+                'name':result[2],
+                'description':result[4],
+                'ingre':result[5],
+                'price':str(result[6]).replace(".", ","),
+                'discount':json.loads(result[8]),
+                'stock':result[9],
+                'statusStock':result[10],
+                'unity':result[13],
+                'amount':str(result[14]).replace(".", ","),
+                'peopleServed':result[15],
+            }
+        }

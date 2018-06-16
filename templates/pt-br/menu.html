@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 
     <!--Título sugerido-->
-    <title>SysBar</title>
+    <title>Categoria - {{ category }} | SysBar</title>
 
     <!--Jquery-->
     <script src="{{ url_for('static', filename='v1/js/jquery-3.2.1.min.js') }}"></script>
@@ -26,8 +26,8 @@
     <!--Init-->
     <script src="{{ url_for('static', filename='v1/js/nav.js') }}"></script>
     <script src="{{ url_for('static', filename='v1/js/autoc.js') }}"></script>
-
-
+    <!-- SysBar js -->
+    <script src="{{ url_for('static', filename='v1/sysbar-js/cookie.js') }}"></script>
   </head>
   <body>
     <div class="fixed-action-btn click-to-toggle">
@@ -40,14 +40,14 @@
 
       <!--Leitura de qr code-->
       <!-- <li><a href="grupo.html" class="btn-floating waves-effect waves-light red"><i class="material-icons">group_add</i></a></li> -->
-      
-      <!-- <li><a href="{{ url_for('carrinho') }}" class="btn-floating waves-effect waves-light red"><i class="material-icons">insert_chart</i></a></li> -->
+
+      <!-- <li><a href="carrinho.html" class="btn-floating waves-effect waves-light red"><i class="material-icons">insert_chart</i></a></li> -->
     </ul>
   </div>
     <header>
       <nav>
         <div class="nav-wrapper red darken-4">
-          <a href="{{ url_for('index') }}" class="brand-logo">Cardápio</a>
+          <a href="{{ url_for('index') }}" class="brand-logo">{{ category }}</a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
             <li><a href="{{ url_for('profile') }}"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
@@ -64,12 +64,44 @@
         </div>
       </nav>
     </header>
-   <ul class="collapsible" data-collapsible="accordion">
+
+    <nav>
+      <div class="nav-wrapper red darken-1">
+        <form>
+          <div class="input-field">
+            <input id="search" type="search" required class="autocomplete">
+            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form>
+      </div>
+    </nav>
+
+
+    <ul class="collapsible" data-collapsible="accordion">
       <li>
-        {% for x in data['data'] %}
-        <a href="{{ url_for('category') }}?c={{ x[0] }}&name={{ x[1] }}"><div class="collapsible-header"><i class="material-icons">room_service</i>{{ x[1] }}</div></a>
-        {% endfor %}
-      </li>
-    </ul>
+        <div class="collapsible-body">
+
+{% for x in data['data'] %}
+  <li>
+{% if 'G' == x['unity'] %}
+<div class="collapsible-header"><span font='bold'>{{ x['name'] }} (Grande)</div>
+{% elif 'M' == x['unity'] %}
+<div class="collapsible-header">{{ x['name'] }} (Médio)</div>
+{% elif 'P' == x['unity'] %}
+<div class="collapsible-header">{{ x['name'] }} (Pequeno)</div>
+{% else %}
+<div class="collapsible-header">{{ x['name'] }} ({{x['amount']}}{{x['unity']}})</div>
+{% endif %}
+  <div class="collapsible-body center-align"><span style="font-size:21px;font-weight:bold;">R$ {{ x['price'] }}</span><br>
+  <span>{{ x['description'] }}</span><br>
+  <span><br>
+  <a class="waves-effect waves-light btn red lighten-1" onClick="save_product([{{ x['ID_product']}}, 0]);"><i class="material-icons">person</i>Para mim</a><br><br>
+  <a class="waves-effect waves-light btn red lighten-1" onClick="save_product([{{ x['ID_product']}}, 1]);"><i class="material-icons">group</i>Para todos (mesa)</a><br><br>
+  <a class="btn-floating btn-large waves-effect waves-light red lighten-1" href="{{ url_for('product')}}?p={{ x['ID_product'] }}&c={{ cId }}&category={{ category }}" title="Ver mais..."><i class="material-icons">add</i></a>
+  </span></div>
+  </li>
+  {% endfor %}
+      </ul>
   </body>
 </html>

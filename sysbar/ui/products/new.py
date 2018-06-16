@@ -627,7 +627,7 @@ class UiNextS4(Gtk.Window):
     def on_event_01(self, widget):
         if widget.get_active() == 1:
             self.unity.remove_all()
-            for item in [("0", "Escolher"), ("L", "Litros (L)"), ("Ml", "Mililitros (Ml)")]:
+            for item in [("0", "Escolher"), ("L", "Litros (L)"), ("ml", "Mililitros (ml)")]:
                 self.unity.append(item[0], item[1])
             self.unity.set_active_id("L")
             self.qUnity.set_editable(True)            

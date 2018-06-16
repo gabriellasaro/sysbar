@@ -7,31 +7,26 @@
     <title>Entrar - SysBar</title>
 
     <!--Jquery-->
-    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/jquery-3.2.1.min.js') }}"></script>
 
     <!--Materialize-->
-    <script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='v1/css/materialize.min.css') }}"  media="screen,projection"/>
+    <script type="text/javascript" src="{{ url_for('static', filename='v1/js/materialize.min.js') }}"></script>
 
     <!--Ícones-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='icons/google/material/iconfont/material-icons.css') }}">
+    <link href="{{ url_for('static', filename='v1/icons/google/material/iconfont/material-icons.css') }}" rel="stylesheet">
 
     <!--Otimizado para mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <!--Meu CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/image.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/mesa.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/niveis.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/paraimg.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='v1/css/image.css') }}">
 
     <!--Init-->
-    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/niver.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/select.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/autoc.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/nav.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/niver.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/select.js') }}"></script>
+    <script src="{{ url_for('static', filename='v1/js/autoc.js') }}"></script>
 
 
   </head>
@@ -40,12 +35,14 @@
     <header>
       <nav>
         <div class="nav-wrapper red darken-4">
-          <a href="{{ url_for('index') }}" class="brand-logo">SysBar</a>
+          <a href="{{ url_for('index') }}" class="brand-logo">Entrar</a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
             <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
           </ul>
           <ul class="side-nav" id="mobile-demo">
+            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
             <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
           </ul>
         </div>
@@ -53,12 +50,13 @@
     </header>
 
     <div class="row">
-      <form class="col s12" style="margin-top:60px">
+      <form class="col s12">
         <div class="row">
+          <br><br>
           <div class="input-field col s12">
             <i class="material-icons prefix">account_circle</i>
             <input id="login_name" type="text" class="validate">
-            <label for="login_name">Telefone ex: 27000000000</label>
+            <label for="login_name">Telefone (ex: 27999999999)</label>
           </div>
           <br><br>
         </div>
@@ -70,9 +68,6 @@
           </div>
         </div>
         <div class="row">
-            <p id="rStatus" style="display: none;"></p>
-        </div>
-        <div class="row">
           <p class="flow-text center-align">
             Ou <a href="{{ url_for('signup') }}">cadastrar-se</a>
           </p>
@@ -80,7 +75,8 @@
         <br>
         <div class="row">
           <div class="row">
-            <script src="{{ url_for('static', filename='sysbar-js/submit.js') }}"></script>
+            <p id="rStatus" style="display: none;"></p>
+            <script src="{{ url_for('static', filename='v1/sysbar-js/submit.js') }}"></script>
             <a class="waves-effect waves-light btn col s6 offset-s3 red lighten-1" onClick="submit_login('{{ url_for('api_login') }}');">Confirmar</a>
           </div>
         </div>

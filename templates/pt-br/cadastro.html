@@ -2,44 +2,56 @@
 <html>
   <head>
     <meta charset="utf-8">
+
     <!--Título sugerido-->
-    <title>Cadastro - SysBar</title>
+    <title>Pão e Cia</title>
+
     <!--Jquery-->
-    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+
     <!--Materialize-->
-    <script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
     <!--Ícones-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='icons/google/material/iconfont/material-icons.css') }}">
+    <link href="icons/google/material/iconfont/material-icons.css" rel="stylesheet">
+
     <!--Otimizado para mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
     <!--Meu CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/image.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/mesa.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/niveis.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/paraimg.css') }}">
+    <link rel="stylesheet" href="css/image.css">
+
     <!--Init-->
-    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/niver.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/select.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/autoc.js') }}"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/niver.js"></script>
+    <script src="js/select.js"></script>
+    <script src="js/autoc.js"></script>
+
+
   </head>
   <body>
+
     <header>
       <nav>
         <div class="nav-wrapper red darken-4">
-          <a href="{{ url_for('index') }}" class="brand-logo">SysBar</a>
+          <a href="index.html" class="brand-logo">Pão&#38;Cia</a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
-            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
-            <li><a href="{{ url_for('login') }}"><i class="material-icons left">build</i>Login|Cadastrar-se</a></li>
-            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+            <li><a href="perfil.html"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="index.html"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="carrinho.html"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="chat.html"><i class="material-icons left">question_answer</i>Chat</a></li>
+            <li><a href="entrar.html"><i class="material-icons left">build</i>Login|Cadastrar-se</a></li>
+            <li><a href="sobre.html"><i class="material-icons left">description</i>Sobre</a></li>
           </ul>
           <ul class="side-nav" id="mobile-demo">
-            <li><a href="{{ url_for('index') }}"><i class="material-icons left">restaurant</i>Cardápio</a></li>
-            <li><a href="{{ url_for('login') }}"><i class="material-icons left">build</i>Login|Cadastrar-se</a></li>
-            <li><a href="{{ url_for('about') }}"><i class="material-icons left">description</i>Sobre</a></li>
+            <li><a href="perfil.html"><i class="material-icons left">account_circle</i>Seu perfil</a></li>
+            <li><a href="index.html"><i class="material-icons left">restaurant</i>Cardápio</a></li>
+            <li><a href="carrinho.html"><i class="material-icons left">local_grocery_store</i>Carrinho</a></li>
+            <li><a href="chat.html"><i class="material-icons">question_answer</i>Chat</a></li>
+            <li><a href="entrar.html"><i class="material-icons left">build</i>Login|Cadastrar-se</a></li>
+            <li><a href="sobre.html"><i class="material-icons left">description</i>Sobre</a></li>
           </ul>
         </div>
       </nav>
@@ -47,40 +59,135 @@
 
     <div class="inform">
       <div class="row">
-        <form class="col s12" style="margin-top:40px">
+        <form class="col s12">
           <div class="row">
-            <div class="input-field col s12">
+            <div class="input-field col s6">
               <i class="material-icons prefix">account_circle</i>
-              <input value="" id="name" type="text" class="validate">
-              <label for="name">Nome completo</label>
+              <input value="" id="first_name" type="text" class="validate">
+              <label for="first_name">Nome</label>
             </div>
-            <!-- <div class="input-field col s6">
+            <div class="input-field col s6">
               <input value="" id="last_name" type="text" class="validate">
               <label for="last_name">Sobrenome</label>
-            </div> -->
+            </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
               <i class="material-icons prefix">lock</i>
               <input value="" id="password" type="number" class="validate">
-              <label for="password">PIN (Senha de 4 dígitos)</label>
+              <label for="password">PIN</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12 m12">
               <i class="material-icons prefix">phone</i>
               <input id="icon_telephone" type="tel" class="validate">
-              <label for="icon_telephone">Telefone (Sempre com o DDD)</label>
+              <label for="icon_telephone">Telefone</label>
             </div>
-            <div class="row">
-                <p id="rStatus" style="display: none;"></p>
+            <div class="wha s12">
+              <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
+              <label for="filled-in-box">WhatsApp</label>
             </div>
-          <div class="row">
-            <script src="{{ url_for('static', filename='sysbar-js/submit.js') }}"></script>
-            <a class="waves-effect waves-light btn col s6 offset-s3 red lighten-1" onClick="submit_new('{{ url_for('api_new_client') }}');">Confirmar</a>
+            <br>
+            <div class="input-field col s12 m12">
+              <i class="material-icons prefix">email</i>
+              <input value="" id="email" type="email" class="validate">
+              <label for="email" data-error="Parece que isso não é um email">Email</label>
+            </div>
           </div>
+          <div class="row col s12 m12">
+            <i class="material-icons prefix">cake</i>
+            <!-- Para deixar um campo inválido escrever "disabled" dentro do input (ver nome e sobrenome)-->
+            <input type="text" class="datepicker" value="Selecione seu aniversário">
+          </div>
+
+          <div class="row">
+            <div class="input-field col s6">
+              <i class="material-icons prefix">public</i>
+              <input disabled value="Brasil" id="pais" type="text" class="validate">
+              <label for="pais">País</label>
+            </div>
+            <div class="input-field col s6">
+              <select>
+                <option value="" disabled selected>Selecione um estado</option>
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+              </select>
+              <label>Estado</label>
+            </div>
+            <div class="input-field col s12 m6">
+              <i class="material-icons prefix">location_city</i>
+              <input value="" id="cidade" type="text" class="autocity">
+              <label for="cidade">Cidade</label>
+            </div>
+            <div class="input-field col s12 m6">
+              <i class="material-icons prefix">domain</i>
+              <input value="" id="cep" type="text" class="validate">
+              <label for="cep">CEP</label>
+            </div>
+            <div class="input-field col s12 l6">
+              <i class="material-icons prefix">place</i>
+              <input value="" id="end1" type="text" class="validate">
+              <label for="end1">Endereço 1</label>
+            </div>
+            <div class="input-field col s12 l6">
+              <i class="material-icons prefix">place</i>
+              <input value="" id="end2" type="text" class="validate">
+              <label for="end2">Endereço 2</label>
+            </div>
+            <div class="input-field col s12 l6">
+              <i class="material-icons prefix">place</i>
+              <input value="" id="end3" type="text" class="validate">
+              <label for="end3">Endereço 3</label>
+            </div>
+            <div class="input-field col s12 l6">
+              <i class="material-icons prefix">place</i>
+              <input value="" id="end4" type="text" class="validate">
+              <label for="end4">Endereço 4</label>
+            </div>
+
+          </div>
+
+
+
+
+
+
+          <div class="row">
+            <a class="waves-effect waves-light btn col s6 offset-s3 red lighten-1">Confirmar</a>
+          </div>
+
+
+
         </form>
       </div>
+
     </div>
+
   </body>
 </html>

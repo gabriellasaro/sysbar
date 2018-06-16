@@ -69,29 +69,31 @@ VALUES (?, ?, ?, ?, ?)""", (self.tableId, args[0], args[1], datetime.now(), date
         except:
             return {'rStatus':0}
 
-    # def update_table_status(self, active=True):
-    #     self.cursor.execute("SELECT busy_table FROM sb_tables WHERE ID_table={} LIMIT 1".format(self.tableId))
-    #     result = self.cursor.fetchone()
-    #     if not result:
-    #         return False
+class SbWTables(SbTables):
+
+    def update_table_status(self, active=True):
+        self.cursor.execute("SELECT busy_table FROM sb_tables WHERE ID_table={} LIMIT 1".format(self.tableId))
+        result = self.cursor.fetchone()
+        if not result:
+            return False
         
-    #     if active:
-    #         if result[0]==1:
-    #             return True
+        if active:
+            if result[0]==1:
+                return True
         
-    #         try:
-    #             self.cursor.execute("""UPDATE sb_tables SET busy_table="1" WHERE ID_table={}""".format(self.tableId))
-    #             self.conn.commit()
-    #             return True
-    #         except:
-    #             return False
-    #     else:
-    #         if result[0]==0:
-    #             return True
+            try:
+                self.cursor.execute("""UPDATE sb_tables SET busy_table="1" WHERE ID_table={}""".format(self.tableId))
+                self.conn.commit()
+                return True
+            except:
+                return False
+        else:
+            if result[0]==0:
+                return True
         
-    #         try:
-    #             self.cursor.execute("""UPDATE sb_tables SET busy_table="0" WHERE ID_table={}""".format(self.tableId))
-    #             self.conn.commit()
-    #             return True
-    #         except:
-    #             return False
+            try:
+                self.cursor.execute("""UPDATE sb_tables SET busy_table="0" WHERE ID_table={}""".format(self.tableId))
+                self.conn.commit()
+                return True
+            except:
+                return False

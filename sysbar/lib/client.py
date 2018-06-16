@@ -16,7 +16,7 @@ from datetime import datetime, date
 # from platform import node
 from sysbar.lib.crypt import SbCrypt
 from sysbar.lib.validation import ValidateInput
-from sysbar.core.tables.tables import SbTables
+from sysbar.core.tables.tables import SbTables, SbWTables
 class SbClient():
 
     def __init__(self, clientId = None):
@@ -202,7 +202,7 @@ class SbWClient(SbClient, ValidateInput):
                 return {'rStatus':11}
             # Verifica a senha
             if self.check_pin(pin):
-                resultTable = SbTables(table)
+                resultTable = SbWTables(table)
                 if not resultTable.update_table_status():
                     return {'rStatus':11}
                 return {
